@@ -20,7 +20,10 @@ export class RestserviceService {
     .toPromise().catch(this.handleError);
    };
 
-   
+   getServer(){
+     return this.server;
+   }
+
   getUser() : string {
     return ""+this.user;
   }
