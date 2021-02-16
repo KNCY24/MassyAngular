@@ -1,0 +1,71 @@
+$black: #000000;
+$blue: #14213D;
+$yellow: #FCA311;
+$beige: #F1C47B;
+$gris: #E5E5E5;
+$white: #FFFFFF;
+
+.content {
+    height: 100%;
+}
+
+.menuleft {
+    position: fixed;
+    left: 0px;
+    top:0px;
+    width: 100px;
+    height:100%;
+    margin: 0 0 0 0;
+	padding: 100px 35px 10px 35px;
+	color: $white;
+	
+    z-index: 2;
+    background:rgba(0,0,0,50%);
+    li {
+        text-align: center;
+        list-style: none;
+        margin-bottom:80px;
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+    }
+}
+
+.partcenter {
+    width:100%;
+    display: grid;
+    grid-template-columns: 15% 85%;
+}
+
+.partright {
+    text-align: center;
+    background-color: red;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    width: 100%;
+    div {
+        padding:10px;
+        margin:1px;
+    }
+}
+
+.product {
+    display: grid;
+    grid-template-columns: 30% 70%;
+    grid-template-areas: 
+    "area1 area2"
+    "area1 area3";
+  }
+  .logoproduct {
+    background-color: pink;
+    grid-area: area1;
+  }
+  .progressbar {
+      background-color: purple;
+      grid-area: area2;
+  }
+  .productprice {
+      background-color: green;
+      grid-area: area3;
+  }
