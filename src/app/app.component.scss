@@ -27,10 +27,25 @@ $white: #FFFFFF;
        font-family: 'Open Sans Condensed', sans-serif;
     }
     .quantity {
+        display: block;
+        width: 60px;
         &:hover {
             cursor: pointer;
         }
+        .reduce{
+            text-align: center;
+            display: inline-block;
+            width: 60px;
+            line-height: 28px;
+            font-size:15px;
+        }
+        animation: bounce 1s alternate infinite;
     }
+}
+
+@keyframes bounce{
+    from {transform: translateY(0);}
+    to   {transform: translateY(5px);}
 }
 
 .content {

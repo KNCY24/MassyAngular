@@ -15,6 +15,7 @@ export class AppComponent {
   timeleft : number[] = [0,0,0,0,0,0];
   lastupdate : number[]= [0,0,0,0,0,0];
   commutateur : number = 1; //1, 10, 100, 0(max)
+  xcommut : string = "x1";
   multi : number[]=[1,10,100];
   qtmulti : number[] = [1,1,1,1,1,1];
 
@@ -69,20 +70,43 @@ export class AppComponent {
     }
   }
 
+  changeCommut(){
+    if(this.commutateur == 1) {
+    this.commutateur = 10;
+     this.xcommut="x10";
+    } else if(this.commutateur == 10){
+      this.commutateur = 100;
+      this.xcommut="x100";
+    } else if(this.commutateur == 100){
+      this.commutateur = 0;
+      this.xcommut="Max";
+    }else if(this.commutateur == 0){
+      this.commutateur = 1;
+      this.xcommut="x1";
+    }
+    this.calcMaxCanBuy();
+  }
+
   calcMaxCanBuy() {
-    for(let i=0; i<6 ;i++) {
-      this.qtmulti[i]=1;
-      let multiplicateur = 0;
-      let price = 0;
-      for(let j=0;j<3;j++){
-        for(let n=0;n<this.multi[j];n++){
-          multiplicateur = multiplicateur + (1 * Math.pow(this.world.products.product[i].croissance,n));
-        } 
-        price = this.world.products.product[i].cout*multiplicateur;
-        if(price <= this.world.money) {
-          this.qtmulti[i] = this.multi[j];
+    if(this.commutateur ==0){
+      for(let i=0; i<6 ;i++) {
+        this.qtmulti[i]=1;
+        let multiplicateur = 0;
+        let price = 0;
+        for(let j=0;j<3;j++){
+          for(let n=0;n<this.multi[j];n++){
+            multiplicateur = multiplicateur + (1 * Math.pow(this.world.products.product[i].croissance,n));
+          } 
+          price = this.world.products.product[i].cout*multiplicateur;
+          if(price <= this.world.money) {
+            this.qtmulti[i] = this.multi[j];
+          }
+          multiplicateur=0;
         }
-        multiplicateur=0;
+      }
+    } else {
+      for(let i=0;i<6;i++){
+        this.qtmulti[i] = this.commutateur;
       }
     }
   }
