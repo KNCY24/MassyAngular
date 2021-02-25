@@ -271,14 +271,14 @@
     <div class="partright">
       <div class="product">
         <div class="logoproduct">
-            <app-product [prod]="world.products.product[0]"class="product"></app-product>
+            <app-product [prod]="world.products.product[0]" class="product"></app-product>
         </div>
         <div class="quantityproduct">{{world.products.product[0].quantite}}</div>
         <div class="progressbar">
           <mat-progress-bar class="progressbar" [value]="progressbarvalue[0]"></mat-progress-bar>
         </div>
         <div class="productbuy">
-            <button (click)="startFabrication(0)" class="price"><div>Buy x1</div><div>500</div></button>
+            <button (click)="startFabrication(0)" class="price"><div>Buy x{{qtmulti[0]}}</div><div>{{world.products.product[0].cout}}</div></button>
             <button class="time">{{world.products.product[0].vitesse}}00:12</button>
         </div>
       </div>
@@ -291,7 +291,7 @@
           <mat-progress-bar class="progressbar" [value]="progressbarvalue[1]"></mat-progress-bar>
         </div>
         <div class="productbuy">
-          <button (click)="startFabrication(1)" class="price"><div>Buy x1</div><div>500</div></button>
+          <button (click)="startFabrication(1)" class="price"><div>Buy x{{qtmulti[1]}}</div><div>{{world.products.product[1].cout}}</div></button>
             <button class="time">00:12</button>
         </div>
       </div>
@@ -304,7 +304,7 @@
           <mat-progress-bar class="progressbar" [value]="progressbarvalue[2]"></mat-progress-bar>
         </div>
         <div class="productbuy">
-          <button (click)="startFabrication(2)" class="price"><div>Buy x1</div><div>500</div></button>
+          <button (click)="startFabrication(2)" class="price"><div>Buy x{{qtmulti[2]}}</div><div>{{world.products.product[2].cout}}</div></button>
             <button class="time">00:12</button>
         </div>
       </div>
@@ -317,7 +317,7 @@
           <mat-progress-bar class="progressbar" [value]="progressbarvalue[3]"></mat-progress-bar>
         </div>
         <div class="productbuy">
-          <button (click)="startFabrication(3)" class="price"><div>Buy x1</div><div>500</div></button>
+          <button (click)="startFabrication(3)" class="price"><div>Buy x{{qtmulti[3]}}</div><div>{{world.products.product[3].cout}}</div></button>
             <button class="time">00:12</button>
         </div>
       </div>
@@ -330,7 +330,7 @@
           <mat-progress-bar class="progressbar" [value]="progressbarvalue[4]"></mat-progress-bar>
         </div>
         <div class="productbuy">
-          <button (click)="startFabrication(4)" class="price"><div>Buy x1</div><div>500</div></button>
+          <button (click)="startFabrication(4)" class="price"><div>Buy x{{qtmulti[4]}}</div><div>{{world.products.product[4].cout}}</div></button>
             <button class="time">00:12</button>
         </div>
       </div>
@@ -343,7 +343,7 @@
           <mat-progress-bar class="progressbar" [value]="progressbarvalue[5]"></mat-progress-bar>
         </div>
         <div class="productbuy">
-          <button (click)="startFabrication(5)" class="price"><div>Buy x1</div><div>500</div></button>
+          <button (click)="startFabrication(5)" class="price"><div>Buy x{{qtmulti[5]}}</div><div>{{world.products.product[5].cout}}</div></button>
             <button class="time">00:12</button>
         </div>
       </div>
