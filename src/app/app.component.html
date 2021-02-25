@@ -251,7 +251,7 @@
   
   <span>{{world.name}}</span>
   <div class="spacer"></div>
-  <span class="capital">$ 5000</span>
+  <span class="capital">$ {{world.money}}</span>
   <div class="spacer"></div>
   <span class="quantity">Buy <br> x1</span>
 </div>
@@ -273,7 +273,7 @@
         <div class="logoproduct">
             <app-product [prod]="world.products.product[0]"class="product"></app-product>
         </div>
-        <div class="quantityproduct">250</div>
+        <div class="quantityproduct">{{world.products.product[0].quantite}}</div>
         <div class="progressbar">
           <mat-progress-bar class="progressbar" [value]="progressbarvalue[0]"></mat-progress-bar>
         </div>
@@ -286,7 +286,7 @@
         <div class="logoproduct">
           <app-product [prod]="world.products.product[1]"class="product"></app-product>
       </div>
-      <div class="quantityproduct">80</div>
+      <div class="quantityproduct">{{world.products.product[1].quantite}}</div>
         <div class="progressbar">
           <mat-progress-bar class="progressbar" [value]="progressbarvalue[1]"></mat-progress-bar>
         </div>
@@ -299,7 +299,7 @@
         <div class="logoproduct">
           <app-product [prod]="world.products.product[2]"class="product"></app-product>
       </div>
-      <div class="quantityproduct">48</div>
+      <div class="quantityproduct">{{world.products.product[2].quantite}}</div>
         <div class="progressbar">
           <mat-progress-bar class="progressbar" [value]="progressbarvalue[2]"></mat-progress-bar>
         </div>
@@ -312,7 +312,7 @@
         <div class="logoproduct">
           <app-product [prod]="world.products.product[3]"class="product"></app-product>
       </div>
-      <div class="quantityproduct">125</div>
+      <div class="quantityproduct">{{world.products.product[3].quantite}}</div>
         <div class="progressbar">
           <mat-progress-bar class="progressbar" [value]="progressbarvalue[3]"></mat-progress-bar>
         </div>
@@ -325,7 +325,7 @@
         <div class="logoproduct">
           <app-product [prod]="world.products.product[4]"class="product"></app-product>
       </div>
-      <div class="quantityproduct">222</div>
+      <div class="quantityproduct">{{world.products.product[4].quantite}}</div>
         <div class="progressbar">
           <mat-progress-bar class="progressbar" [value]="progressbarvalue[4]"></mat-progress-bar>
         </div>
@@ -338,7 +338,7 @@
         <div class="logoproduct">
           <app-product [prod]="world.products.product[5]"class="product"></app-product>
       </div>
-      <div class="quantityproduct">4</div>
+      <div class="quantityproduct">{{world.products.product[5].quantite}}</div>
         <div class="progressbar">
           <mat-progress-bar class="progressbar" [value]="progressbarvalue[5]"></mat-progress-bar>
         </div>

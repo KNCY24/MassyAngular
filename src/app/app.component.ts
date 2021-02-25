@@ -39,6 +39,8 @@ export class AppComponent {
         if(this.timeleft[i] <= 0){
           this.timeleft[i] = 0;
           this.progressbarvalue[i]=0;
+          this.world.score = this.world.score + this.world.products.product[i].revenu;
+          this.world.money = this.world.money + this.world.products.product[i].revenu;
         }else{
           this.progressbarvalue[i] = ((this.world.products.product[i].vitesse
             - this.timeleft[i]) / this.world.products.product[i].vitesse) * 100;
