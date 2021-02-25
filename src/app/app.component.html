@@ -34,42 +34,6 @@
     flex: 1;
   }
 
-  .toolbar {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 60px;
-    display: flex;
-    align-items: center;
-    background-color: black;
-    color: white;
-    font-weight: 600;
-    z-index: 3;
-  }
-
-  .toolbar img {
-    margin: 0 16px;
-  }
-
-  .toolbar #twitter-logo {
-    height: 40px;
-    margin: 0 16px;
-  }
-
-  .toolbar #twitter-logo:hover {
-    opacity: 0.8;
-  }
-
-  .content {
-    display: flex;
-    margin: 82px auto 32px;
-    padding: 0 16px;
-    max-width: 960px;
-    flex-direction: column;
-    align-items: center;
-  }
-
   svg.material-icons {
     height: 24px;
     width: auto;
@@ -160,12 +124,7 @@
   a,
   a:visited,
   a:hover {
-    color: #1976d2;
     text-decoration: none;
-  }
-
-  a:hover {
-    color: #125699;
   }
 
   .terminal {
@@ -219,19 +178,6 @@
   .circle-link:hover {
     transform: translateY(-0.25rem);
     box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.2);
-  }
-
-  footer {
-    margin-top: 8px;
-    display: flex;
-    align-items: center;
-    line-height: 20px;
-    margin-left:150px;
-  }
-
-  footer a {
-    display: flex;
-    align-items: center;
   }
 
   .github-star-badge {
@@ -302,36 +248,32 @@
 
 <!-- Toolbar -->
 <div class="toolbar" role="banner">
-  <img
-    width="40"
-    alt="Massy Logo"
-    src="/assets/MW.png"
-  />
-  <span>Massy World</span>
+  
+  <span>{{world.name}}</span>
   <div class="spacer"></div>
-  <span class="capital">5000 $</span>
+  <span class="capital">$ 5000</span>
   <div class="spacer"></div>
   <span class="quantity">Buy <br> x1</span>
-  <input class="username" type="text" placeholder="Supercycy"/>
 </div>
 
 <div class="content" role="main">
   <div class="partcenter">
     <div>
       <ul class="menuleft">
-        <li><a href="#">Unlocks</a></li>
-        <li><a href="#">Cash Upgrades</a></li>
-        <li><a href="#">Angel Upgrades</a></li>
-        <li><a href="#">Managers</a></li>
-        <li><a href="#">Investors</a></li>
+        <li class="user"><img [attr.src]="server+world.logo" [attr.width]="130" alt="Massy Logo"/></li>
+        <li><button>Unlocks</button></li>
+        <li><button>Upgrades</button></li>
+        <li><button>Managers</button></li>
+        <li><button>Investors</button></li>
       </ul>
     </div>
     
     <div class="partright">
       <div class="product">
         <div class="logoproduct">
-            P1
+            <app-product [prod]="world.products.product[0]"class="product"></app-product>
         </div>
+        <div class="quantityproduct">250</div>
         <div class="progressbar">
             testtt
         </div>
@@ -341,8 +283,9 @@
       </div>
       <div class="product">
         <div class="logoproduct">
-            P2
-        </div>
+          <app-product [prod]="world.products.product[1]"class="product"></app-product>
+      </div>
+      <div class="quantityproduct">80</div>
         <div class="progressbar">
             testtt
         </div>
@@ -352,8 +295,9 @@
       </div>
       <div class="product">
         <div class="logoproduct">
-            P3
-        </div>
+          <app-product [prod]="world.products.product[2]"class="product"></app-product>
+      </div>
+      <div class="quantityproduct">48</div>
         <div class="progressbar">
             testtt
         </div>
@@ -363,8 +307,9 @@
       </div>
       <div class="product">
         <div class="logoproduct">
-            P4
-        </div>
+          <app-product [prod]="world.products.product[3]"class="product"></app-product>
+      </div>
+      <div class="quantityproduct">125</div>
         <div class="progressbar">
             testtt
         </div>
@@ -374,8 +319,9 @@
       </div>
       <div class="product">
         <div class="logoproduct">
-            P5
-        </div>
+          <app-product [prod]="world.products.product[4]"class="product"></app-product>
+      </div>
+      <div class="quantityproduct">222</div>
         <div class="progressbar">
             testtt
         </div>
@@ -385,52 +331,9 @@
       </div>
       <div class="product">
         <div class="logoproduct">
-            P6
-        </div>
-        <div class="progressbar">
-            testtt
-        </div>
-        <div class="productprice">
-            tttttesttt
-        </div>
+          <app-product [prod]="world.products.product[5]"class="product"></app-product>
       </div>
-      <div class="product">
-        <div class="logoproduct">
-            P7
-        </div>
-        <div class="progressbar">
-            testtt
-        </div>
-        <div class="productprice">
-            tttttesttt
-        </div>
-      </div>
-      <div class="product">
-        <div class="logoproduct">
-            P8
-        </div>
-        <div class="progressbar">
-            testtt
-        </div>
-        <div class="productprice">
-            tttttesttt
-        </div>
-      </div>
-      <div class="product">
-        <div class="logoproduct">
-            P9
-        </div>
-        <div class="progressbar">
-            testtt
-        </div>
-        <div class="productprice">
-            tttttesttt
-        </div>
-      </div>
-      <div class="product">
-        <div class="logoproduct">
-            P10
-        </div>
+      <div class="quantityproduct">4</div>
         <div class="progressbar">
             testtt
         </div>
@@ -443,11 +346,10 @@
   </div>
 
     <!-- Footer -->
-    <footer>
-      Create by ISIS Students&nbsp;
-      
+    <footer>      
       <a href="https://isis.univ-jfc.fr/" target="_blank" rel="noopener">
-        <svg class="material-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z" fill="#1976d2"/><path d="M0 0h24v24H0z" fill="none"/></svg>
+        Create by ISIS Students&nbsp;
+        <svg class="material-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z" fill="#14213D"/><path d="M0 0h24v24H0z" fill="none"/></svg>
       </a>
   </footer>
   <svg id="clouds" alt="Gray Clouds Background" xmlns="http://www.w3.org/2000/svg" width="2611.084" height="485.677" viewBox="0 0 2611.084 485.677">

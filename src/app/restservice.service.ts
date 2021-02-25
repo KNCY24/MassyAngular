@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http'
 import { World, Pallier, Product } from './world';
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -24,12 +25,16 @@ export class RestserviceService {
      return this.server;
    }
 
-  getUser() : string {
-    return ""+this.user;
+  getUser() {
+    return this.user;
   }
 
   setUser(username : string) : void {
     this.user = username;
+  }
+
+  setServer(servername : string) : void {
+    this.server=servername;
   }
 
 }

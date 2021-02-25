@@ -5,42 +5,115 @@ $beige: #F1C47B;
 $gris: #E5E5E5;
 $white: #FFFFFF;
 
-.content {
-    height: 100%;
-}
+.toolbar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    background-color:$black;
+    color: white;
+    font-weight: 600;
+    z-index: 3;
 
-.menuleft {
-    position: fixed;
-    left: 0px;
-    top:0px;
-    width: 100px;
-    height:100%;
-    margin: 0 0 0 0;
-	padding: 100px 35px 10px 35px;
-	color: $white;
-	
-    z-index: 2;
-    background:rgba(0,0,0,50%);
-    li {
-        text-align: center;
-        list-style: none;
-        margin-bottom:80px;
-        a {
-            text-decoration: none;
-            color: inherit;
+    padding-left:25px;
+    padding-right:25px;
+    font-family: 'Give You Glory', cursive;
+    font-size: 30px;
+    .capital {
+        font-size: 50px;
+       font-family: 'Open Sans Condensed', sans-serif;
+    }
+    .quantity {
+        &:hover {
+            cursor: pointer;
         }
     }
 }
 
+.content {
+    display: flex;
+    margin: 82px auto 32px;
+    padding: 0 16px;
+    max-width: 960px;
+    flex-direction: column;
+    align-items: center;
+    
+    height: 100%;
+    color:white;
+    font-size: 20px;
+    font-family: 'Open Sans Condensed', sans-serif;
+}
+
 .partcenter {
+    padding-top:8%;
     width:100%;
     display: grid;
     grid-template-columns: 15% 85%;
+    .menuleft {
+        position: fixed;
+        left: 0px;
+        top:0px;
+        width: 210px;
+        height:100%;
+        margin: 0 0 0 0;
+        padding: 100px 0 0 0;
+        color: $white;
+        
+        z-index: 2;
+        background:rgba(0,0,0,50%);
+        li {
+            img{
+                border:4px solid $black;
+                border-radius: 5px;
+                height:150px;
+                &:hover {
+                    cursor: pointer;
+                    border:4px solid $beige;
+                }
+            }
+            &.user {
+                height:150px !important;
+                &:hover {
+                    background-color: transparent;
+                }
+            }
+            line-height: 50px;
+            width: 100%;
+            height: 50px;
+            text-align: center;
+            list-style: none;
+            margin-bottom:40px;
+            button {
+                font-size: 25px;
+                font-family: 'Give You Glory', cursive;
+                border: none;
+                background-color: transparent;
+                width: 100%;
+                height: 100%;
+                color: inherit;
+                &:hover {
+                    cursor: pointer;
+                }
+            }
+            &:hover {
+                line-height: 50px;
+                width: 100%;
+                height: 50px;
+                color:$beige;
+                background-color: $gris;
+                text-align: center;
+                list-style: none;
+                margin-bottom:40px;
+            }
+        }
+    }
 }
 
 .partright {
     text-align: center;
-    background-color: red;
     display: grid;
     grid-template-columns: 1fr 1fr;
     width: 100%;
@@ -48,6 +121,11 @@ $white: #FFFFFF;
         padding:10px;
         margin:1px;
     }
+}
+app-product:first-child {
+    height:100%;
+    width: 100%;
+    display: block;
 }
 
 .product {
@@ -58,8 +136,12 @@ $white: #FFFFFF;
     "area1 area3";
   }
   .logoproduct {
-    background-color: pink;
+    height:75px;
+    width:75px;
+    background-color: $gris;
     grid-area: area1;
+    border: 5px solid $blue;
+    border-radius: 50%;
   }
   .progressbar {
       background-color: purple;
@@ -68,4 +150,31 @@ $white: #FFFFFF;
   .productprice {
       background-color: green;
       grid-area: area3;
+  }
+
+
+  footer {
+    display: flex;
+    align-items: center;
+    margin-left:150px;
+    position: absolute;
+    bottom:10px;
+      a {
+        display: flex;
+        align-items: center;
+        color:$blue;
+      }
+      &:hover {
+          text-decoration: underline;
+          cursor:pointer;
+      }
+  }
+
+  .quantityproduct {
+    margin-top: -30px !important;
+    background: $yellow;
+    border-radius: 25px;
+    height: 10px;
+    line-height: 50%;
+    border: 3px solid $blue;
   }
