@@ -5,6 +5,12 @@ $beige: #F1C47B;
 $gris: #E5E5E5;
 $white: #FFFFFF;
 
+
+
+button:focus {
+    outline: 0;
+}
+
 .toolbar {
     position: absolute;
     top: 0;
@@ -27,10 +33,25 @@ $white: #FFFFFF;
        font-family: 'Open Sans Condensed', sans-serif;
     }
     .quantity {
+        display: block;
+        width: 60px;
         &:hover {
             cursor: pointer;
         }
+        .reduce{
+            text-align: center;
+            display: inline-block;
+            width: 60px;
+            line-height: 28px;
+            font-size:15px;
+        }
+        animation: bounce 1s alternate infinite;
     }
+}
+
+@keyframes bounce{
+    from {transform: translateY(0);}
+    to   {transform: translateY(5px);}
 }
 
 .content {
@@ -45,186 +66,376 @@ $white: #FFFFFF;
     color:white;
     font-size: 20px;
     font-family: 'Open Sans Condensed', sans-serif;
-}
 
-.partcenter {
-    padding-top:8%;
-    width:100%;
-    display: grid;
-    grid-template-columns: 15% 85%;
-    .menuleft {
-        position: fixed;
-        left: 0px;
-        top:0px;
-        width: 210px;
-        height:100%;
-        margin: 0 0 0 0;
-        padding: 100px 0 0 0;
-        color: $white;
-        
-        z-index: 2;
-        background:rgba(0,0,0,50%);
-        li {
-            img{
-                border:4px solid $black;
-                border-radius: 5px;
-                height:150px;
-                &:hover {
-                    cursor: pointer;
-                    border:4px solid $beige;
+
+    .partcenter {
+        padding-top:8%;
+        width:100%;
+        display: grid;
+        grid-template-columns: 15% 85%;
+        .menuleft {
+            position: fixed;
+            left: 0px;
+            top:0px;
+            width: 210px;
+            height:100%;
+            margin: 0 0 0 0;
+            padding: 100px 0 0 0;
+            color: $white;
+            
+            z-index: 2;
+            background:rgba(0,0,0,50%);
+            li {
+                img{
+                    border:4px solid $black;
+                    border-radius: 5px;
+                    height:150px;
+                    &:hover {
+                        cursor: pointer;
+                        border:4px solid $beige;
+                    }
                 }
-            }
-            &.user {
-                height:150px !important;
-                &:hover {
-                    background-color: transparent;
+                &.user {
+                    height:150px !important;
+                    &:hover {
+                        background-color: transparent;
+                    }
                 }
-            }
-            line-height: 50px;
-            width: 100%;
-            height: 50px;
-            text-align: center;
-            list-style: none;
-            margin-bottom:40px;
-            button {
-                font-size: 25px;
-                font-family: 'Give You Glory', cursive;
-                border: none;
-                background-color: transparent;
-                width: 100%;
-                height: 100%;
-                color: inherit;
-                &:hover {
-                    cursor: pointer;
-                }
-            }
-            &:hover {
                 line-height: 50px;
                 width: 100%;
                 height: 50px;
-                color:$beige;
-                background-color: $gris;
                 text-align: center;
                 list-style: none;
                 margin-bottom:40px;
+                button {
+                    font-size: 25px;
+                    font-family: 'Give You Glory', cursive;
+                    border: none;
+                    background-color: transparent;
+                    width: 100%;
+                    height: 100%;
+                    color: inherit;
+                    &:hover {
+                        cursor: pointer;
+                    }
+                }
+                &:hover {
+                    line-height: 50px;
+                    width: 100%;
+                    height: 50px;
+                    color:$beige;
+                    background-color: $gris;
+                    text-align: center;
+                    list-style: none;
+                    margin-bottom:40px;
+                }
+            }
+        }
+
+    .partright {
+        text-align: center;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        width: 100%;
+        div {
+            padding:10px;
+            margin:1px;
+        }
+    
+
+        .product {
+            display: grid;
+            grid-template-columns: 30% 70%;
+            grid-template-areas: 
+            "area1 area2"
+            "area1 area3";
+            
+            .quantityproduct {
+                margin-top: -30px !important;
+                background: $yellow;
+                border-radius: 25px;
+                height: 10px;
+                line-height: 50%;
+                border: 3px solid $blue;
+            }
+            .logoproduct {
+                height:75px;
+                width:75px;
+                background-color: $gris;
+                grid-area: area1;
+                border: 5px solid $blue;
+                border-radius: 50%;
+                app-product:first-child {
+                    height:100%;
+                    width: 100%;
+                    display: block;
+                }
+            }
+            div.progressbar {
+                margin-top:15px !important;
+                grid-area: area2;
+                height: 40px;
+                padding: 0 !important;
+                border:2px solid $blue;
+                .progressbar {
+                    height: 100%;
+                }
+            }
+            .productbuy {
+                height:50px;
+                padding:0 !important;
+                grid-area: area3;
+        
+                
+                display: grid;
+                grid-template-columns: 65% 35%;
+                grid-template-areas: 
+                "area1 area2";
+                button {
+                    height: 100%;
+                    border:2px solid $blue;
+                    background-color: skyblue;
+                }
+                    .activated,.disabled {
+                        display: grid;
+                        padding-left:0;
+                        padding-right:0;
+                        grid-template-columns: 50% 50%;
+                        grid-template-areas: 
+                        "area1 area2";
+                        line-height: 20px;
+                        font-weight: bold;
+                        div:first-child {
+                            font-size: 20px;
+                            text-align: left;
+                            padding:3px 0 0 0;
+                            height: 100%;
+                            width:40px;
+                            font-family: 'Give You Glory', cursive;
+                        }
+                        div:last-child {
+                            text-align: right;
+                            font-size: 25px;
+                            font-family: 'Open Sans Condensed', sans-serif;
+                        }
+                    }  
+                    .activated{
+                        background-color: $yellow;
+                        &:hover {
+                            cursor: pointer;
+                        }
+                    } 
+                    .time {
+                        margin-left:1px;
+                        font-size: 20px;
+                        font-family: 'Open Sans Condensed', sans-serif;
+                    }
+                }
             }
         }
     }
-}
-
-.partright {
-    text-align: center;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    width: 100%;
-    div {
-        padding:10px;
-        margin:1px;
-    }
-}
-app-product:first-child {
-    height:100%;
-    width: 100%;
-    display: block;
-}
-
-.product {
-    display: grid;
-    grid-template-columns: 30% 70%;
-    grid-template-areas: 
-    "area1 area2"
-    "area1 area3";
-  }
-  .logoproduct {
-    height:75px;
-    width:75px;
-    background-color: $gris;
-    grid-area: area1;
-    border: 5px solid $blue;
-    border-radius: 50%;
-  }
-  div.progressbar {
-      margin-top:15px !important;
-      grid-area: area2;
-      height: 40px;
-      padding: 0 !important;
-      border:2px solid $blue;
-      .progressbar {
-          height: 100%;
-      }
-  }
-  .productbuy {
-      height:50px;
-      padding:0 !important;
-      grid-area: area3;
-
-      
-    display: grid;
-    grid-template-columns: 65% 35%;
-    grid-template-areas: 
-    "area1 area2";
-    button {
-        height: 100%;
-        border:2px solid $blue;
-        background-color: skyblue;
-    }
-        .price {
-            display: grid;
-            padding-left:0;
-            padding-right:0;
-            grid-template-columns: 50% 50%;
-            grid-template-areas: 
-            "area1 area2";
-            line-height: 20px;
-            font-weight: bold;
-            div:first-child {
-                font-size: 20px;
-                text-align: left;
-                padding:3px 0 0 0;
-                height: 100%;
-                width:40px;
-                font-family: 'Give You Glory', cursive;
-            }
-            div:last-child {
-                text-align: right;
-                font-size: 25px;
-                font-family: 'Open Sans Condensed', sans-serif;
-            }
-            &:hover {
-                cursor: pointer;
-                background-color: $yellow;
-            }
-        }   
-      .time {
-          margin-left:1px;
-          font-size: 20px;
-          font-family: 'Open Sans Condensed', sans-serif;
-      }
-  }
 
 
-  footer {
+    footer {
     display: flex;
     align-items: center;
     margin-left:150px;
     position: absolute;
     bottom:10px;
-      a {
+        a {
         display: flex;
         align-items: center;
         color:$blue;
-      }
-      &:hover {
-          text-decoration: underline;
-          cursor:pointer;
-      }
-  }
+        }
+        &:hover {
+            text-decoration: underline;
+            cursor:pointer;
+        }
+    }
 
-  .quantityproduct {
-    margin-top: -30px !important;
+
+  
+    #clouds {
+        animation:move 60s linear infinite;
+        position: absolute;
+    }
+
+    @keyframes move {
+        0% {
+            transform: translate(-1800px);
+        }
+        100% {
+            transform: translate(1600px);
+        }
+    }
+}
+
+.modal{
+    top:0;
+    z-index: 10;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,60%);
+    .modal-content { 
+        background: linear-gradient(200deg,$yellow,$beige,$gris);
+        font-family: 'Give You Glory', cursive;
+        position: fixed;
+        width: 50%;
+        height: 75%;
+        top: 20%;
+        left: 25%;
+        background-color: $white;
+        border-radius: 30px;
+        .modal-header {
+            line-height: 75px;
+            text-align: center;
+            color:$white;
+            left:30.5%;
+            top:-35px;
+            position:relative;
+            background-color: $yellow;
+            height: 70px;
+            width: 35%;
+            border-radius: 15px;
+            font-size: 40px;
+        }
+        .modal-body {
+            position: relative;
+            top:80px;
+            left: 10%;
+            height: 60%;
+            width: 80%;
+            color:$blue;
+            .modal-body-content{
+                height: 100%;
+                overflow-y:scroll;
+                overflow-x: hidden;
+            }
+            .body-content {
+                padding-top:30px;
+                color: $blue;
+                display: grid;
+                grid-template-columns: 20% 60% 20%;
+                grid-template-areas: 
+                "area1 area2 area3";
+                div {
+                    vertical-align: middle;
+                    text-align: center;
+                    &.modal-product-info {
+                        height: 68px;
+                        background:rgba(255,255,255,30%);
+                        padding-top:5px;
+                        border-radius:20px 40px 40px 20px;
+                        padding-right:25px;
+                        font-family: 'Open Sans Condensed', sans-serif;
+                        span{
+                            font-family: 'Give You Glory', cursive;
+                            font-size: 18px;
+                            font-weight: bold;
+                        }
+                    }
+                    &.modal-product-logo{
+                        position: relative;
+                        left:40px;
+                        top:5px;
+                    }
+                    &.modal-product-buy {
+                        left:-25px;
+                        top:-15px;
+                        line-height: 50px;
+                        position: relative;
+                        font-size:25px;
+                        background-color: $gris;
+                        width:75px;
+                        height: 50px;
+                        border-radius: 0 30px 0 10px;
+                        border:2px none $beige;
+                        background-color: $gris;
+                        &.buyable{
+                            border:2px solid $beige;
+                            background-color: $yellow;
+                            color:$white;
+                            &:hover{
+                                cursor: pointer;
+                                border:3px solid $white;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        .modal-menu {
+            position: absolute;
+            top:50px;
+            width: 100%;
+            text-align: center;
+            button {
+                border:4px solid $beige;
+                margin:0 25px 0 25px;
+                font-family: 'Open Sans Condensed', sans-serif;
+                background-color: $white;
+                font-size: 20px;
+                width: 95px;
+                height: 85px;
+                border-radius: 50%;
+                &:hover {
+                    cursor: pointer;
+                    border:4px solid $blue;
+                }
+                &.selected {
+                    border:4px solid $blue;
+                }
+            }
+        }
+        .modal-close{
+            background-color: $beige;
+            font-size:30px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            font-family: 'Give You Glory', cursive;
+            position: absolute;
+            top:-80px;
+            right:10px;
+            &:hover {
+                cursor: pointer;
+                border:2px solid $gris;
+            }
+        }
+    }
+}
+
+::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+}
+::-webkit-scrollbar-button {
+    width: 0px;
+    height: 0px;
+}
+::-webkit-scrollbar-thumb {
+    background: $beige;
+    border: 1px solid $gris;
+    border-radius: 5px;
+}
+::-webkit-scrollbar-thumb:hover {
     background: $yellow;
-    border-radius: 25px;
-    height: 10px;
-    line-height: 50%;
-    border: 3px solid $blue;
-  }
+}
+::-webkit-scrollbar-thumb:active {
+    background: $yellow;
+}
+::-webkit-scrollbar-track {
+    background: $gris;
+    border: 1px solid $white;
+    border-radius: 5px;
+}
+::-webkit-scrollbar-track:hover {
+    background: $gris;
+}
+::-webkit-scrollbar-track:active {
+    background: $gris;
+}
+::-webkit-scrollbar-corner {
+    background: transparent;
+}

@@ -1,10 +1,10 @@
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
-<!-- * * * * * * * * * * * The content below * * * * * * * * * * * -->
-<!-- * * * * * * * * * * is only a placeholder * * * * * * * * * * -->
-<!-- * * * * * * * * * * and can be replaced. * * * * * * * * * * * -->
+<!-- * * * * * * * * * * * MASSY WORLD * * * * * * * * * * * -->
+<!-- * * * * * * * * * * 15 Fevrier 2021 * * * * * * * * * * -->
+<!-- * * * * * * * * * * * * AOS ISIS * * * * * * * * * * * * -->
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
-<!-- * * * * * * * * * Delete the template below * * * * * * * * * * -->
-<!-- * * * * * * * to get started with your project! * * * * * * * * -->
+<!-- * * * * * * * * * * * * Created by * * * * * * * * * * * * * -->
+<!-- * * * * * * * * * E. Rousseau, K. Mariema * * * * * * * * * * -->
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
 
 <style>
@@ -253,7 +253,7 @@
   <div class="spacer"></div>
   <span class="capital">$ {{world.money}}</span>
   <div class="spacer"></div>
-  <span class="quantity">Buy <br> x1</span>
+  <span class="quantity" (click)="changeCommut()"><span class="reduce">Buy</span> <br> {{xcommut}}</span>
 </div>
 
 <div class="content" role="main">
@@ -261,90 +261,25 @@
     <div>
       <ul class="menuleft">
         <li class="user"><img [attr.src]="server+world.logo" [attr.width]="130" alt="Massy Logo"/></li>
-        <li><button>Unlocks</button></li>
-        <li><button>Upgrades</button></li>
-        <li><button>Managers</button></li>
-        <li><button>Investors</button></li>
+        <li><button (click)="showUnlocks=true">Unlocks</button></li>
+        <li><button (click)="showUpgrades=true">Upgrades</button></li>
+        <li><button (click)="showManagers=true">Managers</button></li>
+        <li><button (click)="showInvestors=true">Investors</button></li>
       </ul>
     </div>
     
     <div class="partright">
-      <div class="product">
+      <div *ngFor="let n of [0,1,2,3,4,5]" class="product">
         <div class="logoproduct">
-            <app-product [prod]="world.products.product[0]"class="product"></app-product>
+          <app-product [prod]="world.products.product[n]" class="product"></app-product>
         </div>
-        <div class="quantityproduct">{{world.products.product[0].quantite}}</div>
+        <div class="quantityproduct">{{world.products.product[n].quantite}}</div>
         <div class="progressbar">
-          <mat-progress-bar class="progressbar" [value]="progressbarvalue[0]"></mat-progress-bar>
+          <mat-progress-bar class="progressbar" [value]="progressbarvalue[n]"></mat-progress-bar>
         </div>
         <div class="productbuy">
-            <button (click)="startFabrication(0)" class="price"><div>Buy x1</div><div>500</div></button>
-            <button class="time">{{world.products.product[0].vitesse}}00:12</button>
-        </div>
-      </div>
-      <div class="product">
-        <div class="logoproduct">
-          <app-product [prod]="world.products.product[1]"class="product"></app-product>
-      </div>
-      <div class="quantityproduct">{{world.products.product[1].quantite}}</div>
-        <div class="progressbar">
-          <mat-progress-bar class="progressbar" [value]="progressbarvalue[1]"></mat-progress-bar>
-        </div>
-        <div class="productbuy">
-          <button (click)="startFabrication(1)" class="price"><div>Buy x1</div><div>500</div></button>
-            <button class="time">00:12</button>
-        </div>
-      </div>
-      <div class="product">
-        <div class="logoproduct">
-          <app-product [prod]="world.products.product[2]"class="product"></app-product>
-      </div>
-      <div class="quantityproduct">{{world.products.product[2].quantite}}</div>
-        <div class="progressbar">
-          <mat-progress-bar class="progressbar" [value]="progressbarvalue[2]"></mat-progress-bar>
-        </div>
-        <div class="productbuy">
-          <button (click)="startFabrication(2)" class="price"><div>Buy x1</div><div>500</div></button>
-            <button class="time">00:12</button>
-        </div>
-      </div>
-      <div class="product">
-        <div class="logoproduct">
-          <app-product [prod]="world.products.product[3]"class="product"></app-product>
-      </div>
-      <div class="quantityproduct">{{world.products.product[3].quantite}}</div>
-        <div class="progressbar">
-          <mat-progress-bar class="progressbar" [value]="progressbarvalue[3]"></mat-progress-bar>
-        </div>
-        <div class="productbuy">
-          <button (click)="startFabrication(3)" class="price"><div>Buy x1</div><div>500</div></button>
-            <button class="time">00:12</button>
-        </div>
-      </div>
-      <div class="product">
-        <div class="logoproduct">
-          <app-product [prod]="world.products.product[4]"class="product"></app-product>
-      </div>
-      <div class="quantityproduct">{{world.products.product[4].quantite}}</div>
-        <div class="progressbar">
-          <mat-progress-bar class="progressbar" [value]="progressbarvalue[4]"></mat-progress-bar>
-        </div>
-        <div class="productbuy">
-          <button (click)="startFabrication(4)" class="price"><div>Buy x1</div><div>500</div></button>
-            <button class="time">00:12</button>
-        </div>
-      </div>
-      <div class="product">
-        <div class="logoproduct">
-          <app-product [prod]="world.products.product[5]"class="product"></app-product>
-      </div>
-      <div class="quantityproduct">{{world.products.product[5].quantite}}</div>
-        <div class="progressbar">
-          <mat-progress-bar class="progressbar" [value]="progressbarvalue[5]"></mat-progress-bar>
-        </div>
-        <div class="productbuy">
-          <button (click)="startFabrication(5)" class="price"><div>Buy x1</div><div>500</div></button>
-            <button class="time">00:12</button>
+            <button (click)="startFabrication(n)" [ngClass]="{'activated':Productprice[n]<=world.money,'disabled':Productprice[n]>world.money}"><div>Buy x{{qtmulti[n]}}</div><div>{{Productprice[n]}}</div></button>
+            <button class="time">{{world.products.product[n].vitesse}}00:12</button>
         </div>
       </div>
     </div>
@@ -358,10 +293,121 @@
         <svg class="material-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z" fill="#14213D"/><path d="M0 0h24v24H0z" fill="none"/></svg>
       </a>
   </footer>
-  <svg id="clouds" alt="Gray Clouds Background" xmlns="http://www.w3.org/2000/svg" width="2611.084" height="485.677" viewBox="0 0 2611.084 485.677">
+  <svg (load)="calcMaxCanBuy()" id="clouds" alt="Gray Clouds Background" xmlns="http://www.w3.org/2000/svg" width="2611.084" height="485.677" viewBox="0 0 2611.084 485.677">
     <path id="Path_39" data-name="Path 39" d="M2379.709,863.793c10-93-77-171-168-149-52-114-225-105-264,15-75,3-140,59-152,133-30,2.83-66.725,9.829-93.5,26.25-26.771-16.421-63.5-23.42-93.5-26.25-12-74-77-130-152-133-39-120-212-129-264-15-54.084-13.075-106.753,9.173-138.488,48.9-31.734-39.726-84.4-61.974-138.487-48.9-52-114-225-105-264,15a162.027,162.027,0,0,0-103.147,43.044c-30.633-45.365-87.1-72.091-145.206-58.044-52-114-225-105-264,15-75,3-140,59-152,133-53,5-127,23-130,83-2,42,35,72,70,86,49,20,106,18,157,5a165.625,165.625,0,0,0,120,0c47,94,178,113,251,33,61.112,8.015,113.854-5.72,150.492-29.764a165.62,165.62,0,0,0,110.861-3.236c47,94,178,113,251,33,31.385,4.116,60.563,2.495,86.487-3.311,25.924,5.806,55.1,7.427,86.488,3.311,73,80,204,61,251-33a165.625,165.625,0,0,0,120,0c51,13,108,15,157-5a147.188,147.188,0,0,0,33.5-18.694,147.217,147.217,0,0,0,33.5,18.694c49,20,106,18,157,5a165.625,165.625,0,0,0,120,0c47,94,178,113,251,33C2446.709,1093.793,2554.709,922.793,2379.709,863.793Z" transform="translate(142.69 -634.312)" fill="#eee"/>
   </svg>
 
 </div>
+
+
+<div *ngIf="showUnlocks" class="modal">
+  <div class="modal-content">
+      <button (click)="showUnlocks=false" class="modal-close">X</button>
+      <div class="modal-header">
+        <span class="modal-title">Unlocks</span>
+        
+      </div>
+      <div class="modal-body">
+        <div *ngFor="let unlock of world.allunlocks.pallier">
+          <div class="body-content" *ngIf="unlock.unlocked==false">
+            <div class="modal-product-logo">
+              <img width=58 src="http://localhost:8080/{{unlock.logo}}"/>
+            </div>
+            <div class="modal-product-info">
+              <span>{{unlock.name}}</span><br>{{unlock.typeratio}} x{{unlock.ratio}}<br>Price : ${{unlock.seuil}}
+            </div>
+            <div [ngClass]="{'modal-product-buy':true,'buyable':unlock.seuil<=world.money}">
+              Buy!
+            </div>
+          </div>
+        </div>
+      </div>
+  </div>
+</div>
+
+<div  *ngIf="showUpgrades" class="modal">
+  <div class="modal-content">
+      <button (click)="showUpgrades=false" class="modal-close">X</button>
+      <div class="modal-header">
+        <span class="modal-title">Upgrades</span>
+        
+      </div>
+      <div class="modal-menu">
+        <button [ngClass]="{'selected':showcashU==true}" (click)="showcashU=true; showangelU=false">Cash<br>Upgrades</button>
+        <button [ngClass]="{'selected':showangelU==true}" (click)="showangelU=true; showcashU=false">Angel<br>Upgrades</button>
+      </div>
+      <div class="modal-body">
+        <div *ngIf="showcashU" class="modal-body-content">
+          <div *ngFor="let upgrade of world.upgrades.pallier">
+            <div class="body-content" *ngIf="upgrade.unlocked==false">
+              <div class="modal-product-logo">
+                <img width=58 src="http://localhost:8080/{{upgrade.logo}}"/>
+              </div>
+              <div class="modal-product-info">
+                <span>{{upgrade.name}}</span><br>{{upgrade.typeratio}} x{{upgrade.ratio}}<br>Price : ${{upgrade.seuil}}
+              </div>
+              <div [ngClass]="{'modal-product-buy':true,'buyable':upgrade.seuil<=world.money}">
+                Buy!
+              </div>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="showangelU" class="modal-body-content">
+          <div *ngFor="let upgrade of world.angelupgrades.pallier">
+            <div class="body-content" *ngIf="upgrade.unlocked==false">
+              <div class="modal-product-logo">
+                <img width=58 src="http://localhost:8080/{{upgrade.logo}}"/>
+              </div>
+              <div class="modal-product-info">
+                <span>{{upgrade.name}}</span><br>{{upgrade.typeratio}} x{{upgrade.ratio}}<br>Price : {{upgrade.seuil}} angels
+              </div>
+              <div [ngClass]="{'modal-product-buy':true,'buyable':upgrade.seuil<=world.activeangels}">
+                Buy!
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  </div>
+</div>
+
+<div *ngIf="showManagers" class="modal">
+  <div class="modal-content">
+      <button (click)="showManagers=false" class="modal-close">X</button>
+      <div class="modal-header">
+        <span class="modal-title">Managers</span>
+        
+      </div>
+      <div class="modal-body">
+        <div *ngFor="let manager of world.managers.pallier">
+          <div class="body-content" *ngIf="manager.unlocked==false">
+            <div class="modal-product-logo">
+              <img width=58 src="http://localhost:8080/{{manager.logo}}"/>
+            </div>
+            <div class="modal-product-info">
+              <span>{{manager.name}}</span><br>For {{world.products.product[manager.idcible-1].name}}<br>Price : ${{manager.seuil}}
+            </div>
+            <div [ngClass]="{'modal-product-buy':true,'buyable':manager.seuil<=world.money}">
+              Buy!
+            </div>
+          </div>
+        </div>
+      </div>
+  </div>
+</div>
+
+<div *ngIf="showInvestors" class="modal">
+  <div class="modal-content">
+      <button (click)="showInvestors=false" class="modal-close">X</button>
+      <div class="modal-header">
+        <span class="modal-title">Investors</span>
+        
+      </div>
+      <div class="modal-body">
+        Text
+      </div>
+  </div>
+</div>
+
 
 <router-outlet></router-outlet>
