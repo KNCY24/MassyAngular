@@ -1,10 +1,10 @@
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
-<!-- * * * * * * * * * * * The content below * * * * * * * * * * * -->
-<!-- * * * * * * * * * * is only a placeholder * * * * * * * * * * -->
-<!-- * * * * * * * * * * and can be replaced. * * * * * * * * * * * -->
+<!-- * * * * * * * * * * * MASSY WORLD * * * * * * * * * * * -->
+<!-- * * * * * * * * * * 15 Fevrier 2021 * * * * * * * * * * -->
+<!-- * * * * * * * * * * * * AOS ISIS * * * * * * * * * * * * -->
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
-<!-- * * * * * * * * * Delete the template below * * * * * * * * * * -->
-<!-- * * * * * * * to get started with your project! * * * * * * * * -->
+<!-- * * * * * * * * * * * * Created by * * * * * * * * * * * * * -->
+<!-- * * * * * * * * * E. Rousseau, K. Mariema * * * * * * * * * * -->
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
 
 <style>
@@ -308,7 +308,19 @@
         
       </div>
       <div class="modal-body">
-        Text
+        <div *ngFor="let unlock of world.allunlocks.pallier">
+          <div class="body-content" *ngIf="unlock.unlocked==false">
+            <div class="modal-product-logo">
+              <img width=58 src="http://localhost:8080/{{unlock.logo}}"/>
+            </div>
+            <div class="modal-product-info">
+              <span>{{unlock.name}}</span><br>{{unlock.typeratio}} x{{unlock.ratio}}<br>Price : ${{unlock.seuil}}
+            </div>
+            <div [ngClass]="{'modal-product-buy':true,'buyable':unlock.seuil<=world.money}">
+              Buy!
+            </div>
+          </div>
+        </div>
       </div>
   </div>
 </div>
@@ -367,7 +379,19 @@
         
       </div>
       <div class="modal-body">
-        Text
+        <div *ngFor="let manager of world.managers.pallier">
+          <div class="body-content" *ngIf="manager.unlocked==false">
+            <div class="modal-product-logo">
+              <img width=58 src="http://localhost:8080/{{manager.logo}}"/>
+            </div>
+            <div class="modal-product-info">
+              <span>{{manager.name}}</span><br>For {{world.products.product[manager.idcible-1].name}}<br>Price : ${{manager.seuil}}
+            </div>
+            <div [ngClass]="{'modal-product-buy':true,'buyable':manager.seuil<=world.money}">
+              Buy!
+            </div>
+          </div>
+        </div>
       </div>
   </div>
 </div>
