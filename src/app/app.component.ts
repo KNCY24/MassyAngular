@@ -35,16 +35,19 @@ export class AppComponent {
   }
 
   startFabrication(p : number){
-    if(this.Productprice[p] <= this.world.money && this.timeleft[p]<=0){
-      let multiplicateur = 0;
-      if(this.Productprice[p] <= this.world.money){
-        this.world.money = this.world.money - this.Productprice[p];
-      
-        this.timeleft[p] = this.world.products.product[p].timeleft;
-        this.lastupdate[p] = Date.now();
-        this.world.products.product[p].cout = this.world.products.product[p].cout * this.world.products.product[p].croissance;
-      }
+    if(this.timeleft[p]<=0){
+      this.timeleft[p] = this.world.products.product[p].timeleft;
+      this.lastupdate[p] = Date.now();
     }    
+  }
+
+  buy(p:number){
+    if(this.Productprice[p] <= this.world.money){
+      this.world.money = this.world.money - this.Productprice[p];
+      this.world.products.product[p].cout = this.world.products.product[p].cout * this.world.products.product[p].croissance;
+      this.calcMaxCanBuy();
+    }
+
   }
 
   

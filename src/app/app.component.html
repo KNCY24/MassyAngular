@@ -270,7 +270,7 @@
     
     <div class="partright">
       <div *ngFor="let n of [0,1,2,3,4,5]" class="product">
-        <div class="logoproduct">
+        <div class="logoproduct" (click)="startFabrication(n)">
           <app-product [prod]="world.products.product[n]" class="product"></app-product>
         </div>
         <div class="quantityproduct">{{world.products.product[n].quantite}}</div>
@@ -278,7 +278,7 @@
           <mat-progress-bar class="progressbar" [value]="progressbarvalue[n]"></mat-progress-bar>
         </div>
         <div class="productbuy">
-            <button (click)="startFabrication(n)" [ngClass]="{'activated':Productprice[n]<=world.money,'disabled':Productprice[n]>world.money}"><div>Buy x{{qtmulti[n]}}</div><div>{{Productprice[n]}}</div></button>
+            <button (click)="buy(n)" [ngClass]="{'activated':Productprice[n]<=world.money,'disabled':Productprice[n]>world.money}"><div>Buy x{{qtmulti[n]}}</div><div>{{Productprice[n]}}</div></button>
             <button class="time">{{world.products.product[n].vitesse}}00:12</button>
         </div>
       </div>
@@ -344,7 +344,11 @@
                 <img width=58 src="http://localhost:8080/{{upgrade.logo}}"/>
               </div>
               <div class="modal-product-info">
-                <span>{{upgrade.name}}</span><br>{{upgrade.typeratio}} x{{upgrade.ratio}}<br>Price : ${{upgrade.seuil}}
+                <span>{{upgrade.name}}</span><br>
+                <span *ngIf="upgrade.idcible!=0">{{world.products.product[upgrade.idcible-1].name}}</span>
+                <span *ngIf="upgrade.idcible==0">All</span>
+                {{upgrade.typeratio}} x{{upgrade.ratio}} 
+                <br>Price : ${{upgrade.seuil}}
               </div>
               <div [ngClass]="{'modal-product-buy':true,'buyable':upgrade.seuil<=world.money}">
                 Buy!
@@ -359,7 +363,11 @@
                 <img width=58 src="http://localhost:8080/{{upgrade.logo}}"/>
               </div>
               <div class="modal-product-info">
-                <span>{{upgrade.name}}</span><br>{{upgrade.typeratio}} x{{upgrade.ratio}}<br>Price : {{upgrade.seuil}} angels
+                <span>{{upgrade.name}}</span><br>
+                <span *ngIf="upgrade.idcible!=0">{{world.products.product[upgrade.idcible-1].name}}</span>
+                <span *ngIf="upgrade.idcible==0">All</span>
+                {{upgrade.typeratio}} x{{upgrade.ratio}} 
+                <br>Price : {{upgrade.seuil}} angels
               </div>
               <div [ngClass]="{'modal-product-buy':true,'buyable':upgrade.seuil<=world.activeangels}">
                 Buy!

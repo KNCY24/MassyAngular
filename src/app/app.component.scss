@@ -170,6 +170,11 @@ button:focus {
                     width: 100%;
                     display: block;
                 }
+                &:hover{
+                    cursor: pointer;
+                    background-color: $white;
+                    border: 5px solid $yellow;
+                }
             }
             div.progressbar {
                 margin-top:15px !important;
@@ -329,7 +334,7 @@ button:focus {
                         border-radius:20px 40px 40px 20px;
                         padding-right:25px;
                         font-family: 'Open Sans Condensed', sans-serif;
-                        span{
+                        span:first-child{
                             font-family: 'Give You Glory', cursive;
                             font-size: 18px;
                             font-weight: bold;
