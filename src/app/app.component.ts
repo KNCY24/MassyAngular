@@ -18,6 +18,7 @@ export class AppComponent {
   xcommut : string = "x1";
   multi : number[]=[1,10,100];
   qtmulti : number[] = [1,1,1,1,1,1];
+  Productprice :  number[] = [0,0,0,0,0,0];
 
   constructor(private service: RestserviceService) { 
     this.server = service.getServer(); 
@@ -100,13 +101,20 @@ export class AppComponent {
           price = this.world.products.product[i].cout*multiplicateur;
           if(price <= this.world.money) {
             this.qtmulti[i] = this.multi[j];
+            this.Productprice[i]=price;
           }
           multiplicateur=0;
         }
       }
     } else {
       for(let i=0;i<6;i++){
+        let multiplicateur = 0;
         this.qtmulti[i] = this.commutateur;
+        
+        for(let n=0;n<this.commutateur;n++){
+          multiplicateur = multiplicateur + (1 * Math.pow(this.world.products.product[i].croissance,n));
+        }
+        this.Productprice[i] =  this.world.products.product[i].cout*multiplicateur;
       }
     }
   }
