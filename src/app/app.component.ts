@@ -62,6 +62,7 @@ export class AppComponent {
 
   
   ngOnInit(): void {
+    setInterval(() => { this.calcScore(); },100);
     //localStorage.clear();
     if(!localStorage.getItem("username")){
       this.username=this.usertype[Math.floor(Math.random()*6)]+" "+Math.floor(Math.random()*10000);
@@ -69,7 +70,7 @@ export class AppComponent {
     } else {
       this.username = localStorage.getItem("username");
     }
-    setInterval(() => { this.calcScore(); },100);
+    this.service.setUser(this.username);
   }
 
   calcScore() {
@@ -225,6 +226,7 @@ export class AppComponent {
   changeUsername(){
     if(this.username!=""){
       localStorage.setItem("username",this.username);
+      this.service.setUser(this.username); 
     }else {
       this.username = localStorage.getItem("username");
     }
