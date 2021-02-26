@@ -419,7 +419,7 @@
               </div>
               <div class="modal-product-info">
                 <span>{{upgrade.name}}</span><br>
-                <span *ngIf="upgrade.idcible!=0">{{world.products.product[upgrade.idcible-1].name}}</span>
+                <span *ngIf="upgrade.idcible>0">{{world.products.product[upgrade.idcible-1].name}}</span>
                 <span *ngIf="upgrade.idcible==0">All</span>
                 {{upgrade.typeratio}} x{{upgrade.ratio}} 
                 <br>Price : ${{upgrade.seuil}}
