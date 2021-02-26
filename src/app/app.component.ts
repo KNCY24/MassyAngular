@@ -16,9 +16,16 @@ export class AppComponent {
   lastupdate : number[]= [0,0,0,0,0,0];
   commutateur : number = 1; //1, 10, 100, 0(max)
   xcommut : string = "x1";
-  multi : number[]=[1,10,100];
   qtmulti : number[] = [1,1,1,1,1,1];
   Productprice :  number[] = [0,0,0,0,0,0];
+
+  showUnlocks :boolean = false;
+  showUpgrades :boolean = false;
+    showcashU :boolean = true;
+    showangelU :boolean = false;
+  showManagers :boolean = false;
+  showInvestors :boolean = false;
+
 
   constructor(private service: RestserviceService) { 
     this.server = service.getServer(); 
@@ -28,16 +35,10 @@ export class AppComponent {
   }
 
   startFabrication(p : number){
-    if(this.world.products.product[p].cout <= this.world.money && this.timeleft[p]<=0){
+    if(this.Productprice[p] <= this.world.money && this.timeleft[p]<=0){
       let multiplicateur = 0;
-      let price = 0;
-      for(let n=0;n<this.qtmulti[p];n++){
-        multiplicateur = multiplicateur + (1 * Math.pow(this.world.products.product[p].croissance,n));
-      } 
-      price = this.world.products.product[p].cout*multiplicateur;
-      
-      if(price <= this.world.money){
-        this.world.money = this.world.money - price;
+      if(this.Productprice[p] <= this.world.money){
+        this.world.money = this.world.money - this.Productprice[p];
       
         this.timeleft[p] = this.world.products.product[p].timeleft;
         this.lastupdate[p] = Date.now();
@@ -91,20 +92,24 @@ export class AppComponent {
   calcMaxCanBuy() {
     if(this.commutateur ==0){
       for(let i=0; i<6 ;i++) {
+        let max=false;
+        let n=0;
         this.qtmulti[i]=1;
         let multiplicateur = 0;
         let price = 0;
-        for(let j=0;j<3;j++){
-          for(let n=0;n<this.multi[j];n++){
-            multiplicateur = multiplicateur + (1 * Math.pow(this.world.products.product[i].croissance,n));
-          } 
+        while(max === false){
+          multiplicateur = multiplicateur + (1 * Math.pow(this.world.products.product[i].croissance,n));
+          
           price = this.world.products.product[i].cout*multiplicateur;
           if(price <= this.world.money) {
-            this.qtmulti[i] = this.multi[j];
+            this.qtmulti[i] = n+1;
             this.Productprice[i]=price;
+          }else{
+            max=true;
           }
-          multiplicateur=0;
+          n=n+1;
         }
+        multiplicateur=0;
       }
     } else {
       for(let i=0;i<6;i++){

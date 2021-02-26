@@ -5,6 +5,12 @@ $beige: #F1C47B;
 $gris: #E5E5E5;
 $white: #FFFFFF;
 
+
+
+button:focus {
+    outline: 0;
+}
+
 .toolbar {
     position: absolute;
     top: 0;
@@ -190,7 +196,7 @@ $white: #FFFFFF;
                     border:2px solid $blue;
                     background-color: skyblue;
                 }
-                    .price {
+                    .activated,.disabled {
                         display: grid;
                         padding-left:0;
                         padding-right:0;
@@ -212,11 +218,13 @@ $white: #FFFFFF;
                             font-size: 25px;
                             font-family: 'Open Sans Condensed', sans-serif;
                         }
+                    }  
+                    .activated{
+                        background-color: $yellow;
                         &:hover {
                             cursor: pointer;
-                            background-color: $yellow;
                         }
-                    }   
+                    } 
                     .time {
                         margin-left:1px;
                         font-size: 20px;
@@ -258,6 +266,80 @@ $white: #FFFFFF;
         }
         100% {
             transform: translate(1600px);
+        }
+    }
+}
+
+.modal{
+    top:0;
+    z-index: 10;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,60%);
+    .modal-content { 
+        background: linear-gradient(130deg,$yellow,$beige,$gris);
+        font-family: 'Give You Glory', cursive;
+        position: fixed;
+        width: 50%;
+        height: 75%;
+        top: 20%;
+        left: 25%;
+        background-color: $white;
+        border-radius: 30px;
+        .modal-header {
+            line-height: 75px;
+            text-align: center;
+            color:$white;
+            left:30.5%;
+            top:-35px;
+            position:relative;
+            background-color: $yellow;
+            height: 70px;
+            width: 35%;
+            border-radius: 15px;
+            font-size: 40px;
+        }
+        .modal-body {
+            color:$blue;
+        }
+        .modal-menu {
+            position: absolute;
+            top:50px;
+            width: 100%;
+            text-align: center;
+            button {
+                border:4px solid $beige;
+                margin:0 25px 0 25px;
+                font-family: 'Open Sans Condensed', sans-serif;
+                background-color: $white;
+                font-size: 20px;
+                width: 95px;
+                height: 85px;
+                border-radius: 50%;
+                &:hover {
+                    cursor: pointer;
+                    border:4px solid $blue;
+                }
+                &.selected {
+                    border:4px solid $blue;
+                }
+            }
+        }
+        .modal-close{
+            background-color: $beige;
+            font-size:30px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            font-family: 'Give You Glory', cursive;
+            position: absolute;
+            top:-80px;
+            right:10px;
+            &:hover {
+                cursor: pointer;
+                border:2px solid $gris;
+            }
         }
     }
 }
