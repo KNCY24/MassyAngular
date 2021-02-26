@@ -207,7 +207,7 @@ button:focus {
                         display: grid;
                         padding-left:0;
                         padding-right:0;
-                        grid-template-columns: 50% 50%;
+                        grid-template-columns: 40% 60%;
                         grid-template-areas: 
                         "area1 area2";
                         line-height: 20px;
@@ -317,6 +317,9 @@ button:focus {
             height: 60%;
             width: 80%;
             color:$blue;
+            &.modal-body-managers {
+                height: 70%;
+            }
             .modal-userphoto {
                 text-align: center;
                 img{

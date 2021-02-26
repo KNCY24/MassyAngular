@@ -25,6 +25,9 @@ export class AppComponent {
 
   profil: boolean=false;
   showUnlocks :boolean = false;
+    showpU :boolean = true;
+    showgU :boolean = false;
+    showrU :boolean = false;
   showUpgrades :boolean = false;
     showcashU :boolean = true;
     showangelU :boolean = false;
@@ -56,6 +59,7 @@ export class AppComponent {
       this.world.money = this.world.money - this.Productprice[p];
       this.world.products.product[p].cout = this.world.products.product[p].cout * this.world.products.product[p].croissance;
       this.world.products.product[p].quantite = this.world.products.product[p].quantite+this.qtmulti[p];
+      this.verifUnlocks();
       this.calcMaxCanBuy();
     }
   }
@@ -74,7 +78,7 @@ export class AppComponent {
   }
 
   calcScore() {
-    for(let i=0 ; i<6 ; i++){
+    for(let i in this.world.products.product){
       if(this.timeleft[i] != 0){
         const tempsEcoule = Date.now() - this.lastupdate[i];
         this.timeleft[i] = this.timeleft[i] - tempsEcoule;
@@ -120,7 +124,7 @@ export class AppComponent {
 
   calcMaxCanBuy() {
     if(this.commutateur ==0){
-      for(let i=0; i<6 ;i++) {
+      for(let i in this.world.products.product) {
         let max=false;
         let n=0;
         this.qtmulti[i]=1;
@@ -141,7 +145,7 @@ export class AppComponent {
         multiplicateur=0;
       }
     } else {
-      for(let i=0;i<6;i++){
+      for(let i in this.world.products.product){
         let multiplicateur = 0;
         this.qtmulti[i] = this.commutateur;
         
@@ -153,6 +157,62 @@ export class AppComponent {
     }
   }
 
+  verifUnlocks(){
+    var test =0;
+    for(let i in this.world.products.product) {
+      for(let p in this.world.products.product[i].palliers.pallier){
+        if(this.world.products.product[i].quantite >= this.world.products.product[i].palliers.pallier[p].seuil && this.world.products.product[i].palliers.pallier[p].unlocked===false){
+          this.world.products.product[i].palliers.pallier[p].unlocked=true;
+          this.snackBar.open("Wouaaah ! Vous venez de débloquer un nouveau bonus "+ this.world.products.product[i].palliers.pallier[p].typeratio +" pour le produit "+this.world.products.product[i].name, "", {duration:6000})
+          this.unlocks(this.world.products.product[i],this.world.products.product[i].palliers.pallier[p]);
+        }
+      }
+    }
+    for(let i in this.world.allunlocks.pallier){
+      if(this.world.allunlocks.pallier[i].unlocked===false){
+        for(let p in this.world.products.product){
+          if(this.world.allunlocks.pallier[i].seuil <= this.world.products.product[p].quantite ){
+            test = test+1;
+          }
+        }
+        if(test == this.world.products.product.length){
+          this.world.allunlocks.pallier[i].unlocked=true;
+          this.snackBar.open("Wouaaah ! Vous venez de débloquer un bonus général "+this.world.allunlocks.pallier[i].typeratio, "", {duration:6000})
+          this.unlocks(null,this.world.allunlocks.pallier[i]);
+        }
+      }
+    } 
+  }
+
+  unlocks(produit:any,pallier:any){
+    if(produit==null){
+      switch(pallier.typeratio){
+        case "vitesse":{
+          for(let p in this.world.products.product) this.world.products.product[p].vitesse = this.world.products.product[p].vitesse/pallier.ratio; 
+          break;
+        }
+        case "gain": {
+          for(let p in this.world.products.product) this.world.products.product[p].revenu = this.world.products.product[p].revenu*pallier.ratio;
+          break;
+        }
+      }
+    }else {
+      switch(pallier.typeratio){
+        case "vitesse":{
+          produit.vitesse = produit.vitesse/pallier.ratio; 
+          break;
+        }
+        case "gain": {
+          produit.revenu = produit.revenu*pallier.ratio;
+          break;
+        }
+      }
+    }
+    if(pallier.typeratio == "ange"){
+      this.world.angelbonus = this.world.angelbonus + pallier.ratio;
+    }
+  }
+  
   buyUpgrade(upgrade : any,type : string) {
     if(type == "cash"){
       if(this.world.money>=upgrade.seuil){
@@ -161,7 +221,7 @@ export class AppComponent {
         switch(upgrade.typeratio){
           case "vitesse":{
             if(upgrade.idcible ==0){
-              for(let i=0;i<6;i++) this.world.products.product[i].vitesse = this.world.products.product[i].vitesse/upgrade.ratio; 
+              for(let i in this.world.products.product) this.world.products.product[i].vitesse = this.world.products.product[i].vitesse/upgrade.ratio; 
             } else {
               this.world.products.product[upgrade.idcible-1].vitesse = this.world.products.product[upgrade.idcible-1].vitesse/upgrade.ratio; 
             }
@@ -169,7 +229,7 @@ export class AppComponent {
           }
           case "gain": {
             if(upgrade.idcible ==0){
-              for(let i=0;i<6;i++) this.world.products.product[i].revenu = this.world.products.product[i].revenu*upgrade.ratio;
+              for(let i in this.world.products.product) this.world.products.product[i].revenu = this.world.products.product[i].revenu*upgrade.ratio;
             } else {
               this.world.products.product[upgrade.idcible-1].revenu = this.world.products.product[upgrade.idcible-1].revenu*upgrade.ratio;
             }
@@ -189,7 +249,7 @@ export class AppComponent {
         switch(upgrade.typeratio){
           case "vitesse":{
             if(upgrade.idcible ==0){
-              for(let i=0;i<6;i++) this.world.products.product[i].vitesse = this.world.products.product[i].vitesse/upgrade.ratio; 
+              for(let i in this.world.products.product) this.world.products.product[i].vitesse = this.world.products.product[i].vitesse/upgrade.ratio; 
             } else {
               this.world.products.product[upgrade.idcible-1].vitesse = this.world.products.product[upgrade.idcible-1].vitesse/upgrade.ratio; 
             }
@@ -197,7 +257,7 @@ export class AppComponent {
           }
           case "gain": {
             if(upgrade.idcible ==0){
-              for(let i=0;i<6;i++) this.world.products.product[i].revenu = this.world.products.product[i].revenu*upgrade.ratio;
+              for(let i in this.world.products.product) this.world.products.product[i].revenu = this.world.products.product[i].revenu*upgrade.ratio;
             } else {
               this.world.products.product[upgrade.idcible-1].revenu = this.world.products.product[upgrade.idcible-1].revenu*upgrade.ratio;
             }

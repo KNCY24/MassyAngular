@@ -322,12 +322,65 @@
 
 <div *ngIf="showUnlocks" class="modal">
   <div class="modal-content">
-      <button (click)="showUnlocks=false" class="modal-close">X</button>
-      <div class="modal-header">
-        <span class="modal-title">Unlocks</span>
-        
+    <button (click)="showUnlocks=false" class="modal-close">X</button>
+    <div class="modal-header">
+      <span class="modal-title">Unlocks</span>
+      
+    </div>
+    <div class="modal-menu">
+      <button [ngClass]="{'selected':showpU==true}" (click)="showpU=true; showgU=false; showrU=false">Product<br>unlocked</button>
+      <button [ngClass]="{'selected':showgU==true}" (click)="showgU=true; showpU=false; showrU=false">General<br>unlocked</button>
+      <button [ngClass]="{'selected':showrU==true}" (click)="showrU=true; showpU=false; showgU=false">Remaining<br>unlocks</button>
+    </div>
+    <div class="modal-body modal-body-upgrades">
+      <div *ngIf="showpU" class="modal-body-content">
+        <div *ngFor="let product of world.products.product">
+          <div *ngFor="let unlock of product.palliers.pallier">
+            <div class="body-content" *ngIf="unlock.unlocked==true">
+              <div class="modal-product-logo">
+                <img width=58 src="http://localhost:8080/{{unlock.logo}}"/>
+              </div>
+              <div class="modal-product-info">
+                <span>{{unlock.name}}</span><br>
+                <span>{{world.products.product[unlock.idcible-1].name}}</span>
+                {{unlock.typeratio}} x{{unlock.ratio}} 
+                <br>Seuil : {{unlock.seuil}} {{product.name}}
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="modal-body">
+      <div *ngIf="showgU" class="modal-body-content">
+        <div *ngFor="let unlock of world.allunlocks.pallier">
+          <div class="body-content" *ngIf="unlock.unlocked==true">
+            <div class="modal-product-logo">
+              <img width=58 src="http://localhost:8080/{{unlock.logo}}"/>
+            </div>
+            <div class="modal-product-info">
+              <span>{{unlock.name}}</span><br>
+              <span>All products</span>
+              {{unlock.typeratio}} x{{unlock.ratio}} 
+              <br>Seuil : {{unlock.seuil}} of each product
+            </div>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="showrU" class="modal-body-content">
+        <div *ngFor="let product of world.products.product">
+          <div *ngFor="let unlock of product.palliers.pallier">
+            <div class="body-content" *ngIf="unlock.unlocked==false">
+              <div class="modal-product-logo">
+                <img width=58 src="http://localhost:8080/{{unlock.logo}}"/>
+              </div>
+              <div class="modal-product-info">
+                <span>{{unlock.name}}</span><br>
+                <span>{{world.products.product[unlock.idcible-1].name}}</span>
+                {{unlock.typeratio}} x{{unlock.ratio}} 
+                <br>Seuil : {{unlock.seuil}} {{product.name}}
+              </div>
+            </div>
+          </div>
+        </div>
         <div *ngFor="let unlock of world.allunlocks.pallier">
           <div class="body-content" *ngIf="unlock.unlocked==false">
             <div class="modal-product-logo">
@@ -335,18 +388,15 @@
             </div>
             <div class="modal-product-info">
               <span>{{unlock.name}}</span><br>
-              <span *ngIf="unlock.idcible!=0">{{world.products.product[unlock.idcible-1].name}}</span>
-              <span *ngIf="unlock.idcible==0">All</span>
+              <span>All products</span>
               {{unlock.typeratio}} x{{unlock.ratio}} 
-              <br>Price : ${{unlock.seuil}}
-            </div>
-            <div [ngClass]="{'modal-product-buy':true,'buyable':unlock.seuil<=world.money}">
-              Buy!
+              <br>Seuil : {{unlock.seuil}} of each product
             </div>
           </div>
         </div>
       </div>
-  </div>
+    </div>
+</div>
 </div>
 
 <div  *ngIf="showUpgrades" class="modal">
@@ -410,20 +460,22 @@
         <span class="modal-title">Managers</span>
         
       </div>
-      <div class="modal-body">
-        <div *ngFor="let manager of world.managers.pallier">
-          <div class="body-content" *ngIf="manager.unlocked==false">
-            <div class="modal-product-logo">
-              <img width=58 src="http://localhost:8080/{{manager.logo}}"/>
-            </div>
-            <div class="modal-product-info">
-              <span>{{manager.name}}</span><br>For {{world.products.product[manager.idcible-1].name}}<br>Price : ${{manager.seuil}}
-            </div>
-            <div (click)="buyManager(manager)" [ngClass]="{'modal-product-buy':true,'buyable':manager.seuil<=world.money}">
-              Hire!
+      <div class="modal-body modal-body-managers">
+        <div class="modal-body-content">
+          <div *ngFor="let manager of world.managers.pallier">
+            <div class="body-content" *ngIf="manager.unlocked==false">
+              <div class="modal-product-logo">
+                <img width=58 src="http://localhost:8080/{{manager.logo}}"/>
+              </div>
+              <div class="modal-product-info">
+                <span>{{manager.name}}</span><br>For {{world.products.product[manager.idcible-1].name}}<br>Price : ${{manager.seuil}}
+              </div>
+              <div (click)="buyManager(manager)" [ngClass]="{'modal-product-buy':true,'buyable':manager.seuil<=world.money}">
+                Hire!
+              </div>
             </div>
           </div>
-        </div>
+          </div>
       </div>
   </div>
 </div>
