@@ -260,11 +260,11 @@
   <div class="partcenter">
     <div>
       <ul class="menuleft">
-        <li class="user"><img [attr.src]="server+world.logo" [attr.width]="130" alt="Massy Logo"/></li>
-        <li><button (click)="showUnlocks=true">Unlocks</button></li>
-        <li><button (click)="showUpgrades=true">Upgrades</button></li>
-        <li><button (click)="showManagers=true">Managers</button></li>
-        <li><button (click)="showInvestors=true">Investors</button></li>
+        <li class="user" (click)="profil=true"><img [attr.src]="server+world.logo" [attr.width]="130" alt="Massy Logo"/></li>
+        <li><button (click)="showUnlocks=true" matBadge="badgeUnlocks" matBadgeHidden="badgeUnlocks==0">Unlocks</button></li>
+        <li><button (click)="showUpgrades=true" matBadge="badgeUpgrades" matBadgeHidden="badgeUpgrades==0">Upgrades</button></li>
+        <li><button (click)="showManagers=true" matBadge="badgeManagers" matBadgeHidden="badgeManagers==0">Managers</button></li>
+        <li><button (click)="showInvestors=true" matBadge="badgeInvestors" matBadgeHidden="badgeInvestors==0">Investors</button></li>
       </ul>
     </div>
     
@@ -299,6 +299,26 @@
 
 </div>
 
+<div *ngIf="profil" class="modal">
+  <div class="modal-content">
+    <button (click)="profil=false" class="modal-close">X</button>
+    <div class="modal-header modal-header-profil">
+      <span class="modal-title">Profil du joueur</span>
+    </div>
+    <div class="modal-body">
+      <div class="modal-userphoto">
+        <img width=130 src="http://localhost:8080/{{world.logo}}"/>
+      </div>
+      <div class="modal-username">
+        <input type="text" [(ngModel)]="username" value="{{username}}" (change)="changeUsername()" />
+      </div>
+      <div class="modal-info">
+        <br>Argent cumulé : $ {{world.score}} <br>
+        Dernière réinitialisation : {{world.lastupdate}}
+      </div>
+    </div>
+</div>
+</div>
 
 <div *ngIf="showUnlocks" class="modal">
   <div class="modal-content">
@@ -399,8 +419,8 @@
             <div class="modal-product-info">
               <span>{{manager.name}}</span><br>For {{world.products.product[manager.idcible-1].name}}<br>Price : ${{manager.seuil}}
             </div>
-            <div [ngClass]="{'modal-product-buy':true,'buyable':manager.seuil<=world.money}">
-              Buy!
+            <div (click)="buyManager(manager)" [ngClass]="{'modal-product-buy':true,'buyable':manager.seuil<=world.money}">
+              Hire!
             </div>
           </div>
         </div>

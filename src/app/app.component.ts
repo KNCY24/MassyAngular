@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { RestserviceService } from './restservice.service'; 
 import { World, Product, Pallier } from './world';
 
@@ -11,6 +12,8 @@ export class AppComponent {
   title = 'MassyAngular';
   world: World = new World(); 
   server: string;
+  username: any =localStorage.getItem("username");
+
   progressbarvalue : number[] = [0,0,0,0,0,0];
   timeleft : number[] = [0,0,0,0,0,0];
   lastupdate : number[]= [0,0,0,0,0,0];
@@ -19,6 +22,7 @@ export class AppComponent {
   qtmulti : number[] = [1,1,1,1,1,1];
   Productprice :  number[] = [0,0,0,0,0,0];
 
+  profil: boolean=false;
   showUnlocks :boolean = false;
   showUpgrades :boolean = false;
     showcashU :boolean = true;
@@ -26,8 +30,13 @@ export class AppComponent {
   showManagers :boolean = false;
   showInvestors :boolean = false;
 
+  badgeUnlocks:number=2;
+  badgeUpgrades:number=0;
+  badgeManagers:number=2;
+  badgeInvestors:number=0;
 
-  constructor(private service: RestserviceService) { 
+
+  constructor(private service: RestserviceService, private snackBar: MatSnackBar) { 
     this.server = service.getServer(); 
     service.getWorld().then( 
       world => { this.world = world; }
@@ -163,6 +172,7 @@ export class AppComponent {
           }
         }
       }
+      this.snackBar.open("Génial ! Vous venez d'acheter un Cash Upgrade", "", {duration:6000});
     } else{
       if(this.world.activeangels>=upgrade.seuil){
         this.world.activeangels = this.world.activeangels-upgrade.seuil;
@@ -190,8 +200,21 @@ export class AppComponent {
           }
         }
       }
+      this.snackBar.open("Génial ! Vous venez d'acheter un Angel Upgrade", "", {duration:6000});
     }
   }
 
+  buyManager(manager :any){
+    if(this.world.money>=manager.seuil){
+      this.world.money = this.world.money - manager.seuil;
+      manager.unlocked = true;
+      this.world.products.product[manager.idcible-1].managerUnlocked = true;
+      setInterval(() => { this.startFabrication(manager.idcible-1); },100);
+      this.snackBar.open("Félicitations ! Vous venez d'embaucher un manager pour "+this.world.products.product[manager.idcible-1].name, "", {duration:6000})
+    }
+  }
 
+  changeUsername(){
+    localStorage.setItem("username",this.username);
+  }
 }
