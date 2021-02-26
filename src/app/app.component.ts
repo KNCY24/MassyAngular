@@ -45,9 +45,9 @@ export class AppComponent {
     if(this.Productprice[p] <= this.world.money){
       this.world.money = this.world.money - this.Productprice[p];
       this.world.products.product[p].cout = this.world.products.product[p].cout * this.world.products.product[p].croissance;
+      this.world.products.product[p].quantite = this.world.products.product[p].quantite+this.qtmulti[p];
       this.calcMaxCanBuy();
     }
-
   }
 
   
@@ -63,7 +63,6 @@ export class AppComponent {
         if(this.timeleft[i] <= 0){
           this.timeleft[i] = 0;
           this.progressbarvalue[i]=0;
-          this.world.products.product[i].quantite = this.world.products.product[i].quantite+this.qtmulti[i];
           this.world.score = this.world.score + this.world.products.product[i].revenu;
           this.world.money = this.world.money + this.world.products.product[i].revenu;
           this.calcMaxCanBuy();

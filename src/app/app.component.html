@@ -279,7 +279,7 @@
         </div>
         <div class="productbuy">
             <button (click)="buy(n)" [ngClass]="{'activated':Productprice[n]<=world.money,'disabled':Productprice[n]>world.money}"><div>Buy x{{qtmulti[n]}}</div><div>{{Productprice[n]}}</div></button>
-            <button class="time">{{world.products.product[n].vitesse}}00:12</button>
+            <button class="time">{{world.products.product[n].vitesse}}</button>
         </div>
       </div>
     </div>
@@ -314,7 +314,11 @@
               <img width=58 src="http://localhost:8080/{{unlock.logo}}"/>
             </div>
             <div class="modal-product-info">
-              <span>{{unlock.name}}</span><br>{{unlock.typeratio}} x{{unlock.ratio}}<br>Price : ${{unlock.seuil}}
+              <span>{{unlock.name}}</span><br>
+              <span *ngIf="unlock.idcible!=0">{{world.products.product[unlock.idcible-1].name}}</span>
+              <span *ngIf="unlock.idcible==0">All</span>
+              {{unlock.typeratio}} x{{unlock.ratio}} 
+              <br>Price : ${{unlock.seuil}}
             </div>
             <div [ngClass]="{'modal-product-buy':true,'buyable':unlock.seuil<=world.money}">
               Buy!
@@ -336,7 +340,7 @@
         <button [ngClass]="{'selected':showcashU==true}" (click)="showcashU=true; showangelU=false">Cash<br>Upgrades</button>
         <button [ngClass]="{'selected':showangelU==true}" (click)="showangelU=true; showcashU=false">Angel<br>Upgrades</button>
       </div>
-      <div class="modal-body">
+      <div class="modal-body modal-body-upgrades">
         <div *ngIf="showcashU" class="modal-body-content">
           <div *ngFor="let upgrade of world.upgrades.pallier">
             <div class="body-content" *ngIf="upgrade.unlocked==false">
