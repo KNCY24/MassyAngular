@@ -41,7 +41,7 @@ export class AppComponent {
     }    
   }
 
-  buy(p:number){
+  buyProduct(p:number){
     if(this.Productprice[p] <= this.world.money){
       this.world.money = this.world.money - this.Productprice[p];
       this.world.products.product[p].cout = this.world.products.product[p].cout * this.world.products.product[p].croissance;
@@ -75,18 +75,27 @@ export class AppComponent {
   }
 
   changeCommut(){
-    if(this.commutateur == 1) {
-    this.commutateur = 10;
-     this.xcommut="x10";
-    } else if(this.commutateur == 10){
-      this.commutateur = 100;
-      this.xcommut="x100";
-    } else if(this.commutateur == 100){
-      this.commutateur = 0;
-      this.xcommut="Max";
-    }else if(this.commutateur == 0){
-      this.commutateur = 1;
-      this.xcommut="x1";
+    switch(this.commutateur){
+      case 1: {
+        this.commutateur = 10;
+        this.xcommut="x10";
+        break;
+      }
+      case 10: {
+        this.commutateur = 100;
+        this.xcommut="x100";
+        break;
+      }
+      case 100: {
+        this.commutateur = 0;
+        this.xcommut="Max";
+        break;
+      }
+      case 0: {
+        this.commutateur = 1;
+        this.xcommut="x1";
+        break;
+      }
     }
     this.calcMaxCanBuy();
   }
@@ -125,4 +134,64 @@ export class AppComponent {
       }
     }
   }
+
+  buyUpgrade(upgrade : any,type : string) {
+    if(type == "cash"){
+      if(this.world.money>=upgrade.seuil){
+        this.world.money = this.world.money-upgrade.seuil;
+        upgrade.unlocked = true;
+        switch(upgrade.typeratio){
+          case "vitesse":{
+            if(upgrade.idcible ==0){
+              for(let i=0;i<6;i++) this.world.products.product[i].vitesse = this.world.products.product[i].vitesse/upgrade.ratio; 
+            } else {
+              this.world.products.product[upgrade.idcible-1].vitesse = this.world.products.product[upgrade.idcible-1].vitesse/upgrade.ratio; 
+            }
+            break;
+          }
+          case "gain": {
+            if(upgrade.idcible ==0){
+              for(let i=0;i<6;i++) this.world.products.product[i].revenu = this.world.products.product[i].revenu*upgrade.ratio;
+            } else {
+              this.world.products.product[upgrade.idcible-1].revenu = this.world.products.product[upgrade.idcible-1].revenu*upgrade.ratio;
+            }
+            break;
+          }
+          case "ange": {
+            this.world.angelbonus = this.world.angelbonus + upgrade.ratio;
+            break;
+          }
+        }
+      }
+    } else{
+      if(this.world.activeangels>=upgrade.seuil){
+        this.world.activeangels = this.world.activeangels-upgrade.seuil;
+        upgrade.unlocked = true;
+        switch(upgrade.typeratio){
+          case "vitesse":{
+            if(upgrade.idcible ==0){
+              for(let i=0;i<6;i++) this.world.products.product[i].vitesse = this.world.products.product[i].vitesse/upgrade.ratio; 
+            } else {
+              this.world.products.product[upgrade.idcible-1].vitesse = this.world.products.product[upgrade.idcible-1].vitesse/upgrade.ratio; 
+            }
+            break;
+          }
+          case "gain": {
+            if(upgrade.idcible ==0){
+              for(let i=0;i<6;i++) this.world.products.product[i].revenu = this.world.products.product[i].revenu*upgrade.ratio;
+            } else {
+              this.world.products.product[upgrade.idcible-1].revenu = this.world.products.product[upgrade.idcible-1].revenu*upgrade.ratio;
+            }
+            break;
+          }
+          case "ange": {
+            this.world.angelbonus = this.world.angelbonus + upgrade.ratio;
+            break;
+          }
+        }
+      }
+    }
+  }
+
+
 }

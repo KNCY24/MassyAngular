@@ -278,7 +278,7 @@
           <mat-progress-bar class="progressbar" [value]="progressbarvalue[n]"></mat-progress-bar>
         </div>
         <div class="productbuy">
-            <button (click)="buy(n)" [ngClass]="{'activated':Productprice[n]<=world.money,'disabled':Productprice[n]>world.money}"><div>Buy x{{qtmulti[n]}}</div><div>{{Productprice[n]}}</div></button>
+            <button (click)="buyProduct(n)" [ngClass]="{'activated':Productprice[n]<=world.money,'disabled':Productprice[n]>world.money}"><div>Buy x{{qtmulti[n]}}</div><div>{{Productprice[n]}}</div></button>
             <button class="time">{{world.products.product[n].vitesse}}</button>
         </div>
       </div>
@@ -354,7 +354,7 @@
                 {{upgrade.typeratio}} x{{upgrade.ratio}} 
                 <br>Price : ${{upgrade.seuil}}
               </div>
-              <div [ngClass]="{'modal-product-buy':true,'buyable':upgrade.seuil<=world.money}">
+              <div (click)="buyUpgrade(upgrade,'cash')" [ngClass]="{'modal-product-buy':true,'buyable':upgrade.seuil<=world.money}">
                 Buy!
               </div>
             </div>
@@ -373,7 +373,7 @@
                 {{upgrade.typeratio}} x{{upgrade.ratio}} 
                 <br>Price : {{upgrade.seuil}} angels
               </div>
-              <div [ngClass]="{'modal-product-buy':true,'buyable':upgrade.seuil<=world.activeangels}">
+              <div (click)="buyUpgrade(upgrade,'angel')" [ngClass]="{'modal-product-buy':true,'buyable':upgrade.seuil<=world.activeangels}">
                 Buy!
               </div>
             </div>
