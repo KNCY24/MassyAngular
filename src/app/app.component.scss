@@ -301,7 +301,16 @@ button:focus {
             font-size: 40px;
         }
         .modal-body {
+            position: relative;
+            top:80px;
+            left: 15%;
+            height: 60%;
+            width: 70%;
             color:$blue;
+            .modal-body-content{
+                border-top:2px solid $gris;
+                height: 100%;
+            }
         }
         .modal-menu {
             position: absolute;

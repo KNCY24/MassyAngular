@@ -269,82 +269,17 @@
     </div>
     
     <div class="partright">
-      <div class="product">
+      <div *ngFor="let n of [0,1,2,3,4,5]" class="product">
         <div class="logoproduct">
-            <app-product [prod]="world.products.product[0]" class="product"></app-product>
+          <app-product [prod]="world.products.product[n]" class="product"></app-product>
         </div>
-        <div class="quantityproduct">{{world.products.product[0].quantite}}</div>
+        <div class="quantityproduct">{{world.products.product[n].quantite}}</div>
         <div class="progressbar">
-          <mat-progress-bar class="progressbar" [value]="progressbarvalue[0]"></mat-progress-bar>
+          <mat-progress-bar class="progressbar" [value]="progressbarvalue[n]"></mat-progress-bar>
         </div>
         <div class="productbuy">
-            <button (click)="startFabrication(0)" [ngClass]="{'activated':Productprice[0]<=world.money,'disabled':Productprice[0]>world.money}"><div>Buy x{{qtmulti[0]}}</div><div>{{Productprice[0]}}</div></button>
-            <button class="time">{{world.products.product[0].vitesse}}00:12</button>
-        </div>
-      </div>
-      <div class="product">
-        <div class="logoproduct">
-          <app-product [prod]="world.products.product[1]"class="product"></app-product>
-      </div>
-      <div class="quantityproduct">{{world.products.product[1].quantite}}</div>
-        <div class="progressbar">
-          <mat-progress-bar class="progressbar" [value]="progressbarvalue[1]"></mat-progress-bar>
-        </div>
-        <div class="productbuy">
-          <button (click)="startFabrication(1)" [ngClass]="{'activated':Productprice[1]<=world.money,'disabled':Productprice[1]>world.money}"><div>Buy x{{qtmulti[1]}}</div><div>{{Productprice[1]}}</div></button>
-            <button class="time">00:12</button>
-        </div>
-      </div>
-      <div class="product">
-        <div class="logoproduct">
-          <app-product [prod]="world.products.product[2]"class="product"></app-product>
-      </div>
-      <div class="quantityproduct">{{world.products.product[2].quantite}}</div>
-        <div class="progressbar">
-          <mat-progress-bar class="progressbar" [value]="progressbarvalue[2]"></mat-progress-bar>
-        </div>
-        <div class="productbuy">
-          <button (click)="startFabrication(2)" [ngClass]="{'activated':Productprice[2]<=world.money,'disabled':Productprice[2]>world.money}"><div>Buy x{{qtmulti[2]}}</div><div>{{Productprice[2]}}</div></button>
-            <button class="time">00:12</button>
-        </div>
-      </div>
-      <div class="product">
-        <div class="logoproduct">
-          <app-product [prod]="world.products.product[3]"class="product"></app-product>
-      </div>
-      <div class="quantityproduct">{{world.products.product[3].quantite}}</div>
-        <div class="progressbar">
-          <mat-progress-bar class="progressbar" [value]="progressbarvalue[3]"></mat-progress-bar>
-        </div>
-        <div class="productbuy">
-          <button (click)="startFabrication(3)" [ngClass]="{'activated':Productprice[3]<=world.money,'disabled':Productprice[3]>world.money}"><div>Buy x{{qtmulti[3]}}</div><div>{{Productprice[3]}}</div></button>
-            <button class="time">00:12</button>
-        </div>
-      </div>
-      <div class="product">
-        <div class="logoproduct">
-          <app-product [prod]="world.products.product[4]"class="product"></app-product>
-      </div>
-      <div class="quantityproduct">{{world.products.product[4].quantite}}</div>
-        <div class="progressbar">
-          <mat-progress-bar class="progressbar" [value]="progressbarvalue[4]"></mat-progress-bar>
-        </div>
-        <div class="productbuy">
-          <button (click)="startFabrication(4)" [ngClass]="{'activated':Productprice[4]<=world.money,'disabled':Productprice[4]>world.money}"><div>Buy x{{qtmulti[4]}}</div><div>{{Productprice[4]}}</div></button>
-            <button class="time">00:12</button>
-        </div>
-      </div>
-      <div class="product">
-        <div class="logoproduct">
-          <app-product [prod]="world.products.product[5]"class="product"></app-product>
-      </div>
-      <div class="quantityproduct">{{world.products.product[5].quantite}}</div>
-        <div class="progressbar">
-          <mat-progress-bar class="progressbar" [value]="progressbarvalue[5]"></mat-progress-bar>
-        </div>
-        <div class="productbuy">
-          <button (click)="startFabrication(5)" [ngClass]="{'activated':Productprice[5]<=world.money,'disabled':Productprice[5]>world.money}"><div>Buy x{{qtmulti[5]}}</div><div>{{Productprice[5]}}</div></button>
-            <button class="time">00:12</button>
+            <button (click)="startFabrication(n)" [ngClass]="{'activated':Productprice[n]<=world.money,'disabled':Productprice[n]>world.money}"><div>Buy x{{qtmulti[n]}}</div><div>{{Productprice[n]}}</div></button>
+            <button class="time">{{world.products.product[n].vitesse}}00:12</button>
         </div>
       </div>
     </div>
@@ -390,8 +325,26 @@
         <button [ngClass]="{'selected':showangelU==true}" (click)="showangelU=true; showcashU=false">Angel<br>Upgrades</button>
       </div>
       <div class="modal-body">
-        <div *ngIf="showcashU">ooo</div>
-        <div *ngIf="showangelU">uuu</div>
+        <div *ngIf="showcashU" class="modal-body-content">
+          <div *ngFor="let upgrade of world.upgrades.pallier">
+            <div class="modal-product-logo">
+              <img width=58 src="http://localhost:8080/{{upgrade.logo}}"/>
+            </div>
+            <div class="modal-product-info"></div>
+            <div class="modal-product-buy"></div>
+          </div>
+        </div>
+        <div *ngIf="showangelU" class="modal-body-content">
+          <div *ngFor="let upgrade of world.angelupgrades.pallier">
+            <div class="modal-product-logo">
+              <img width=58 src="http://localhost:8080/{{upgrade.logo}}"/>
+            </div>
+            <div class="modal-product-info">
+              {{upgrade.name}}
+            </div>
+            <div class="modal-product-buy"></div>
+          </div>
+        </div>
       </div>
   </div>
 </div>
