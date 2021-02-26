@@ -310,7 +310,7 @@
         <img width=130 src="http://localhost:8080/{{world.logo}}"/>
       </div>
       <div class="modal-username">
-        <input type="text" [(ngModel)]="username" value="{{username}}" (change)="changeUsername()" />
+        <input placeholder="Nom utilisateur" type="text" [(ngModel)]="username" value="{{username}}" (change)="changeUsername()" />
       </div>
       <div class="modal-info">
         <br>Argent cumulé : $ {{world.score}} <br>

@@ -12,7 +12,8 @@ export class AppComponent {
   title = 'MassyAngular';
   world: World = new World(); 
   server: string;
-  username: any =localStorage.getItem("username");
+  username: any = "";
+  usertype : string[] = ["Decontesse", "MissDonut","4fromages","Pernaut","Ok","Spielberg"];
 
   progressbarvalue : number[] = [0,0,0,0,0,0];
   timeleft : number[] = [0,0,0,0,0,0];
@@ -61,6 +62,13 @@ export class AppComponent {
 
   
   ngOnInit(): void {
+    //localStorage.clear();
+    if(!localStorage.getItem("username")){
+      this.username=this.usertype[Math.floor(Math.random()*6)]+" "+Math.floor(Math.random()*10000);
+      localStorage.setItem("username",this.username);
+    } else {
+      this.username = localStorage.getItem("username");
+    }
     setInterval(() => { this.calcScore(); },100);
   }
 
@@ -215,6 +223,10 @@ export class AppComponent {
   }
 
   changeUsername(){
-    localStorage.setItem("username",this.username);
+    if(this.username!=""){
+      localStorage.setItem("username",this.username);
+    }else {
+      this.username = localStorage.getItem("username");
+    }
   }
 }
