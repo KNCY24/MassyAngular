@@ -312,8 +312,8 @@
       </div>
   </div>
 </div>
-<!-- -->
-<div *ngIf="showUpgrades" class="modal">
+
+<div  *ngIf="showUpgrades" class="modal">
   <div class="modal-content">
       <button (click)="showUpgrades=false" class="modal-close">X</button>
       <div class="modal-header">
@@ -327,22 +327,32 @@
       <div class="modal-body">
         <div *ngIf="showcashU" class="modal-body-content">
           <div *ngFor="let upgrade of world.upgrades.pallier">
-            <div class="modal-product-logo">
-              <img width=58 src="http://localhost:8080/{{upgrade.logo}}"/>
+            <div class="body-content" *ngIf="upgrade.unlocked==false">
+              <div class="modal-product-logo">
+                <img width=58 src="http://localhost:8080/{{upgrade.logo}}"/>
+              </div>
+              <div class="modal-product-info">
+                <span>{{upgrade.name}}</span><br>{{upgrade.typeratio}} x{{upgrade.ratio}}<br>Price : ${{upgrade.seuil}}
+              </div>
+              <div [ngClass]="{'modal-product-buy':true,'buyable':upgrade.seuil<=world.money}">
+                Buy!
+              </div>
             </div>
-            <div class="modal-product-info"></div>
-            <div class="modal-product-buy"></div>
           </div>
         </div>
         <div *ngIf="showangelU" class="modal-body-content">
           <div *ngFor="let upgrade of world.angelupgrades.pallier">
-            <div class="modal-product-logo">
-              <img width=58 src="http://localhost:8080/{{upgrade.logo}}"/>
+            <div class="body-content" *ngIf="upgrade.unlocked==false">
+              <div class="modal-product-logo">
+                <img width=58 src="http://localhost:8080/{{upgrade.logo}}"/>
+              </div>
+              <div class="modal-product-info">
+                <span>{{upgrade.name}}</span><br>{{upgrade.typeratio}} x{{upgrade.ratio}}<br>Price : {{upgrade.seuil}} angels
+              </div>
+              <div [ngClass]="{'modal-product-buy':true,'buyable':upgrade.seuil<=world.activeangels}">
+                Buy!
+              </div>
             </div>
-            <div class="modal-product-info">
-              {{upgrade.name}}
-            </div>
-            <div class="modal-product-buy"></div>
           </div>
         </div>
       </div>

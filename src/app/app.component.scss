@@ -278,7 +278,7 @@ button:focus {
     height: 100%;
     background: rgba(0,0,0,60%);
     .modal-content { 
-        background: linear-gradient(130deg,$yellow,$beige,$gris);
+        background: linear-gradient(200deg,$yellow,$beige,$gris);
         font-family: 'Give You Glory', cursive;
         position: fixed;
         width: 50%;
@@ -303,13 +303,65 @@ button:focus {
         .modal-body {
             position: relative;
             top:80px;
-            left: 15%;
+            left: 10%;
             height: 60%;
-            width: 70%;
+            width: 80%;
             color:$blue;
             .modal-body-content{
-                border-top:2px solid $gris;
                 height: 100%;
+                overflow-y:scroll;
+                overflow-x: hidden;
+                .body-content {
+                    padding-top:30px;
+                    color: $blue;
+                    display: grid;
+                    grid-template-columns: 20% 60% 20%;
+                    grid-template-areas: 
+                    "area1 area2 area3";
+                    div {
+                        vertical-align: middle;
+                        text-align: center;
+                        &.modal-product-info {
+                            background:rgba(255,255,255,30%);
+                            padding-top:5px;
+                            border-radius:20px 40px 40px 20px;
+                            padding-right:25px;
+                            font-family: 'Open Sans Condensed', sans-serif;
+                            span{
+                                font-family: 'Give You Glory', cursive;
+                                font-size: 18px;
+                                font-weight: bold;
+                            }
+                        }
+                        &.modal-product-logo{
+                            position: relative;
+                            left:40px;
+                            top:5px;
+                        }
+                        &.modal-product-buy {
+                            left:-25px;
+                            top:-15px;
+                            line-height: 50px;
+                            position: relative;
+                            font-size:25px;
+                            background-color: $gris;
+                            width:75px;
+                            height: 50px;
+                            border-radius: 0 30px 0 10px;
+                            border:2px none $beige;
+                            background-color: $gris;
+                            &.buyable{
+                                border:2px solid $beige;
+                                background-color: $yellow;
+                                color:$white;
+                                &:hover{
+                                    cursor: pointer;
+                                    border:3px solid $white;
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
         .modal-menu {
@@ -351,4 +403,38 @@ button:focus {
             }
         }
     }
+}
+
+::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+}
+::-webkit-scrollbar-button {
+    width: 0px;
+    height: 0px;
+}
+::-webkit-scrollbar-thumb {
+    background: $beige;
+    border: 1px solid $gris;
+    border-radius: 5px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: $yellow;
+}
+::-webkit-scrollbar-thumb:active {
+    background: $yellow;
+}
+::-webkit-scrollbar-track {
+    background: $gris;
+    border: 1px solid $white;
+    border-radius: 5px;
+}
+::-webkit-scrollbar-track:hover {
+    background: $gris;
+}
+::-webkit-scrollbar-track:active {
+    background: $gris;
+}
+::-webkit-scrollbar-corner {
+    background: transparent;
 }
