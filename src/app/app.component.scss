@@ -6,7 +6,6 @@ $gris: #E5E5E5;
 $white: #FFFFFF;
 
 
-
 button:focus {
     outline: 0;
 }
@@ -244,19 +243,27 @@ button:focus {
 
 
     footer {
-    display: flex;
-    align-items: center;
-    margin-left:150px;
-    position: absolute;
-    bottom:10px;
-        a {
+        width: 100%;
         display: flex;
-        align-items: center;
-        color:$blue;
+        position: absolute;
+        bottom:10px;
+        text-align: center;
+        padding-left: 100%;
+        a {
+            display: flex;
+            align-items: center;
+            color:$blue;
+            &:hover {
+                text-decoration: underline;
+                cursor:pointer;
+            }
         }
-        &:hover {
-            text-decoration: underline;
-            cursor:pointer;
+        img{
+            position: absolute;
+            right: 27%;
+            &:hover{
+                cursor: pointer;
+            }
         }
     }
 

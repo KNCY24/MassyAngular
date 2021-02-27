@@ -28,6 +28,22 @@ export class RestserviceService {
     .toPromise().catch(this.handleError);
    };
 
+
+   putManager(manager:Pallier):Promise<Response>{
+     return this.http.put(this.server+ "adventureisis/generic/manager",manager,{
+       headers: this.setHeaders(this.user)
+     })
+     .toPromise().catch(this.handleError);
+   }
+   
+   putProduct(product:Product):Promise<Response>{
+    return this.http.put(this.server+ "adventureisis/generic/product",product,{
+      headers: this.setHeaders(this.user)
+    })
+    .toPromise().catch(this.handleError);
+  }
+
+
    getServer():string{
      return this.server;
    }

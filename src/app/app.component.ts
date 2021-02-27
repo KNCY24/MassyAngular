@@ -23,6 +23,8 @@ export class AppComponent {
   qtmulti : number[] = [1,1,1,1,1,1];
   Productprice :  number[] = [0,0,0,0,0,0];
 
+  welcome: boolean=true;
+  sound:boolean=true;
   profil: boolean=false;
   showUnlocks :boolean = false;
     showpU :boolean = true;
@@ -49,6 +51,7 @@ export class AppComponent {
 
   startFabrication(p : number){
     if(this.timeleft[p]<=0){
+      this.service.putProduct(this.world.products.product[p]);
       this.timeleft[p] = this.world.products.product[p].timeleft;
       this.lastupdate[p] = Date.now();
     }    
@@ -56,8 +59,9 @@ export class AppComponent {
 
   buyProduct(p:number){
     if(this.Productprice[p] <= this.world.money){
+      this.service.putProduct(this.world.products.product[p]);
       this.world.money = this.world.money - this.Productprice[p];
-      this.world.products.product[p].cout = this.world.products.product[p].cout * this.world.products.product[p].croissance;
+      for(let q =0;q<this.qtmulti[p];q++) this.world.products.product[p].cout = this.world.products.product[p].cout * this.world.products.product[p].croissance;
       this.world.products.product[p].quantite = this.world.products.product[p].quantite+this.qtmulti[p];
       this.verifUnlocks();
       this.calcMaxCanBuy();
@@ -75,6 +79,26 @@ export class AppComponent {
       this.username = localStorage.getItem("username");
     }
     this.service.setUser(this.username);
+  }
+
+  init() {
+    let player=<HTMLVideoElement> document.getElementById('audioPlayer');
+    player.play();
+    for(let p in this.world.products.product){
+      this.Productprice[p] = this.world.products.product[p].cout;
+    }
+  }
+
+  mutedSound() {
+    let player=<HTMLVideoElement> document.getElementById('audioPlayer');
+    player.muted=this.sound;
+    if(this.sound==true){
+      this.sound=false; 
+      document.getElementById('sound')?.setAttribute("src","assets/mute.png");
+    } else{
+      this.sound=true; 
+      document.getElementById('sound')?.setAttribute("src","assets/volume.png");
+    }
   }
 
   calcScore() {
@@ -131,7 +155,7 @@ export class AppComponent {
         let multiplicateur = 0;
         let price = 0;
         while(max === false){
-          multiplicateur = multiplicateur + (1 * Math.pow(this.world.products.product[i].croissance,n));
+          multiplicateur = multiplicateur + (Math.pow(this.world.products.product[i].croissance,n));
           
           price = this.world.products.product[i].cout*multiplicateur;
           if(price <= this.world.money) {
@@ -275,6 +299,7 @@ export class AppComponent {
 
   buyManager(manager :any){
     if(this.world.money>=manager.seuil){
+      this.service.putManager(manager);
       this.world.money = this.world.money - manager.seuil;
       manager.unlocked = true;
       this.world.products.product[manager.idcible-1].managerUnlocked = true;
@@ -291,4 +316,5 @@ export class AppComponent {
       this.username = localStorage.getItem("username");
     }
   }
+
 }
