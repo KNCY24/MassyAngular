@@ -251,7 +251,7 @@
   
   <span>{{world.name}}</span>
   <div class="spacer"></div>
-  <span class="capital">$ {{world.money}}</span>
+  <span [innerHTML]="world.money | bigvalue" class="capital"></span>
   <div class="spacer"></div>
   <span class="quantity" (click)="changeCommut()"><span class="reduce">Buy</span> <br> {{xcommut}}</span>
 </div>
@@ -279,7 +279,7 @@
         </div>
         <div class="productbuy">
             <button (click)="startFabrication(n)" [ngClass]="{'activated':Productprice[n]<=world.money,'disabled':Productprice[n]>world.money}"><div>Buy x{{qtmulti[n]}}</div><div>{{Productprice[n]}}</div></button>
-            <button class="time">{{world.products.product[n].vitesse}}00:12</button>
+            <button class="time">{{world.products.product[n].vitesse}}</button>
         </div>
       </div>
     </div>
