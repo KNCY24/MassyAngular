@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http'
+import { HttpClient, HttpHeaders } from '@angular/common/http'
 import { World, Pallier, Product } from './world';
 
 
@@ -7,8 +7,8 @@ import { World, Pallier, Product } from './world';
   providedIn: 'root'
 })
 export class RestserviceService {
-  server = "http://localhost:8080/"
-  user = "";
+  server :string= "http://localhost:8080/"
+  user :string = "";
 
   constructor(private http: HttpClient) { }
 
@@ -16,16 +16,39 @@ export class RestserviceService {
     console.error('An error occurred', error);
     return Promise.reject(error.message || error);
    }
+
+  private setHeaders(user: string): HttpHeaders {
+    var headers = new HttpHeaders({'X-user':user});
+    return headers;
+  }
    getWorld(): Promise<World> {
-    return this.http.get(this.server + "adventureisis/generic/world")
+    return this.http.get(this.server + "adventureisis/generic/world",{
+      headers: this.setHeaders(this.user)
+    })
     .toPromise().catch(this.handleError);
    };
 
-   getServer(){
+
+   putManager(manager:Pallier):Promise<Response>{
+     return this.http.put(this.server+ "adventureisis/generic/manager",manager,{
+       headers: this.setHeaders(this.user)
+     })
+     .toPromise().catch(this.handleError);
+   }
+   
+   putProduct(product:Product):Promise<Response>{
+    return this.http.put(this.server+ "adventureisis/generic/product",product,{
+      headers: this.setHeaders(this.user)
+    })
+    .toPromise().catch(this.handleError);
+  }
+
+
+   getServer():string{
      return this.server;
    }
 
-  getUser() {
+  getUser() : string{
     return this.user;
   }
 
