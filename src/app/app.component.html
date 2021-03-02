@@ -251,7 +251,8 @@
   
   <span>{{world.name}}</span>
   <div class="spacer"></div>
-  <span class="capital">$ {{world.money}}</span>
+  <span class="capital">$</span> 
+  <span [innerHTML]= "world.money | bigvalue " class="capital"></span>
   <div class="spacer"></div>
   <span class="quantity" (click)="changeCommut()"><span class="reduce">Buy</span> <br> {{xcommut}}</span>
 </div>
@@ -273,17 +274,17 @@
         <div class="logoproduct" (click)="startFabrication(n)">
           <app-product [prod]="world.products.product[n]" class="product"></app-product>
         </div>
-        <div class="quantityproduct">{{world.products.product[n].quantite}}</div>
+        <div class="quantityproduct" >{{world.products.product[n].quantite}}</div>
         <div class="progressbar">
           <mat-progress-bar class="progressbar" [value]="progressbarvalue[n]"></mat-progress-bar>
         </div>
         <div class="productbuy">
             <button (click)="buyProduct(n)" [ngClass]="{'activated':Productprice[n]<=world.money,'disabled':Productprice[n]>world.money}">
               <div>Buy x{{qtmulti[n]}}</div>
-              <div *ngIf="Productprice[n]==0">{{world.products.product[n].cout}}</div>
-              <div *ngIf="Productprice[n]!=0">{{Productprice[n]}}</div>
+              <div *ngIf="Productprice[n]==0" [innerHTML]=" world.products.product[n].cout | bigvalue"></div>
+              <div *ngIf="Productprice[n]!=0" [innerHTML]=" Productprice[n] | bigvalue"></div>
             </button>
-            <button class="time">{{world.products.product[n].vitesse}}</button>
+            <button class="time" >{{world.products.product[n].vitesse}}</button>
         </div>
       </div>
     </div>
