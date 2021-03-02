@@ -68,11 +68,10 @@ export class AppComponent {
 
     if(this.Productprice[p] <= this.world.money){
       this.world.money = this.world.money - this.Productprice[p];
-      for(let q =0;q<this.qtmulti[p];q++)this.world.products.product[p].cout = this.world.products.product[p].cout * this.world.products.product[p].croissance;
+      for(let q =0;q<this.qtmulti[p];q++) this.world.products.product[p].cout = this.world.products.product[p].cout * this.world.products.product[p].croissance;
       this.world.products.product[p].quantite = this.world.products.product[p].quantite+this.qtmulti[p];
-      this.service.putProduct(this.world.products.product[p]).then( 
-        world => { this.world = world;}
-      ); 
+      this.service.putProduct(this.world.products.product[p]);
+      
       this.verifUnlocks();
       this.calcMaxCanBuy();
     }
