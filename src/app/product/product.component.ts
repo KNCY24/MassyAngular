@@ -19,6 +19,7 @@ export class ProductComponent implements OnInit {
   @Input()
   set prod(value: Product) {
     this.product = value;
+    
   }
 
   getprod(){
