@@ -29,14 +29,14 @@ export class RestserviceService {
    };
 
 
-   putManager(manager:Pallier):Promise<Response>{
+   putManager(manager:Pallier):Promise<World>{
      return this.http.put(this.server+ "adventureisis/generic/manager",manager,{
        headers: this.setHeaders(this.user)
      })
      .toPromise().catch(this.handleError);
    }
    
-   putProduct(product:Product):Promise<Response>{
+   putProduct(product:Product):Promise<World>{
     return this.http.put(this.server+ "adventureisis/generic/product",product,{
       headers: this.setHeaders(this.user)
     })

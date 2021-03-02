@@ -44,6 +44,13 @@ export class AppComponent {
 
   constructor(private service: RestserviceService, private snackBar: MatSnackBar) { 
     this.server = service.getServer(); 
+    if(!localStorage.getItem("username")){
+      this.username=this.usertype[Math.floor(Math.random()*6)]+" "+Math.floor(Math.random()*10000);
+      localStorage.setItem("username",this.username);
+    } else {
+      this.username = localStorage.getItem("username");
+    }
+    this.service.setUser(this.username);
     service.getWorld().then( 
       world => { this.world = world; }
     ); 
@@ -58,11 +65,14 @@ export class AppComponent {
   }
 
   buyProduct(p:number){
+
     if(this.Productprice[p] <= this.world.money){
-      this.service.putProduct(this.world.products.product[p]);
       this.world.money = this.world.money - this.Productprice[p];
-      for(let q =0;q<this.qtmulti[p];q++) this.world.products.product[p].cout = this.world.products.product[p].cout * this.world.products.product[p].croissance;
+      for(let q =0;q<this.qtmulti[p];q++)this.world.products.product[p].cout = this.world.products.product[p].cout * this.world.products.product[p].croissance;
       this.world.products.product[p].quantite = this.world.products.product[p].quantite+this.qtmulti[p];
+      this.service.putProduct(this.world.products.product[p]).then( 
+        world => { this.world = world;}
+      ); 
       this.verifUnlocks();
       this.calcMaxCanBuy();
     }
@@ -72,13 +82,6 @@ export class AppComponent {
   ngOnInit(): void {
     setInterval(() => { this.calcScore(); },100);
     //localStorage.clear();
-    if(!localStorage.getItem("username")){
-      this.username=this.usertype[Math.floor(Math.random()*6)]+" "+Math.floor(Math.random()*10000);
-      localStorage.setItem("username",this.username);
-    } else {
-      this.username = localStorage.getItem("username");
-    }
-    this.service.setUser(this.username);
   }
 
   init() {
