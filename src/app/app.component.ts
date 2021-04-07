@@ -266,8 +266,8 @@ export class AppComponent {
             break;
           }
         }
+        this.snackBar.open("Génial ! Vous venez d'acheter un Cash Upgrade", "", {duration:6000});
       }
-      this.snackBar.open("Génial ! Vous venez d'acheter un Cash Upgrade", "", {duration:6000});
     } else{
       if(this.world.activeangels>=upgrade.seuil){
         this.world.activeangels = this.world.activeangels-upgrade.seuil;
@@ -294,8 +294,8 @@ export class AppComponent {
             break;
           }
         }
+        this.snackBar.open("Génial ! Vous venez d'acheter un Angel Upgrade", "", {duration:6000});
       }
-      this.snackBar.open("Génial ! Vous venez d'acheter un Angel Upgrade", "", {duration:6000});
     }
   }
 
