@@ -43,6 +43,20 @@ export class RestserviceService {
     .toPromise().catch(this.handleError);
   }
 
+  putUpgrade(upgrade: Pallier):Promise<Response>{
+    return this.http.put(this.server+ "adventureisis/generic/upgrade",upgrade,{
+      headers: this.setHeaders(this.user)
+    })
+    .toPromise().catch(this.handleError);
+  }
+
+  delete():Promise<World>{
+    return this.http.get(this.server+ "adventureisis/generic/delete",{
+      headers: this.setHeaders(this.user)
+    })
+    .toPromise().catch(this.handleError);
+  }
+
 
    getServer():string{
      return this.server;

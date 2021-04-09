@@ -22,6 +22,7 @@ export class AppComponent {
   xcommut : string = "x1";
   qtmulti : number[] = [1,1,1,1,1,1];
   Productprice :  number[] = [0,0,0,0,0,0];
+  totalClaimed : number = 0;
 
   welcome: boolean=true;
   sound:boolean=true;
@@ -49,7 +50,7 @@ export class AppComponent {
       localStorage.setItem("username",this.username);
     } else {
       this.username = localStorage.getItem("username");
-    }
+    } 
     this.service.setUser(this.username);
     service.getWorld().then( 
       world => { this.world = world; }
@@ -58,8 +59,8 @@ export class AppComponent {
 
   startFabrication(p : number){
     if(this.timeleft[p]<=0){
+      this.timeleft[p] = this.world.products.product[p].vitesse;
       this.service.putProduct(this.world.products.product[p]);
-      this.timeleft[p] = this.world.products.product[p].timeleft;
       this.lastupdate[p] = Date.now();
     }    
   }
@@ -86,8 +87,22 @@ export class AppComponent {
   init() {
     let player=<HTMLVideoElement> document.getElementById('audioPlayer');
     player.play();
+    this.totalClaimed = 150* Math.sqrt(this.world.score/Math.pow(10,15)) - this.world.totalangels;
+    if (this.totalClaimed<0) this.totalClaimed =0;
     for(let p in this.world.products.product){
       this.Productprice[p] = this.world.products.product[p].cout;
+      if(this.world.products.product[p].timeleft != 0){
+        this.progressbarvalue[p] = ((this.world.products.product[p].vitesse
+          - this.world.products.product[p].timeleft) / this.world.products.product[p].vitesse) * 100;
+
+        this.lastupdate[p] = parseInt(this.world.lastupdate);
+        this.timeleft[p] = this.world.products.product[p].timeleft;
+      }
+    }
+    for(let m in this.world.managers.pallier){
+      if(this.world.managers.pallier[m].unlocked == true){
+        this.loopManager(this.world.managers.pallier[m])
+      }
     }
   }
 
@@ -107,12 +122,15 @@ export class AppComponent {
     for(let i in this.world.products.product){
       if(this.timeleft[i] != 0){
         const tempsEcoule = Date.now() - this.lastupdate[i];
+        this.lastupdate[i] = Date.now();
         this.timeleft[i] = this.timeleft[i] - tempsEcoule;
         if(this.timeleft[i] <= 0){
           this.timeleft[i] = 0;
           this.progressbarvalue[i]=0;
-          this.world.score = this.world.score + this.world.products.product[i].revenu;
-          this.world.money = this.world.money + this.world.products.product[i].revenu;
+          this.world.score = this.world.score + (this.world.products.product[i].revenu * (1+(this.world.activeangels*this.world.angelbonus/100) ));
+          this.world.money = this.world.money + (this.world.products.product[i].revenu * (1+(this.world.activeangels*this.world.angelbonus/100) ));
+          this.totalClaimed = 150* Math.sqrt(this.world.score/Math.pow(10,5)) - this.world.totalangels;
+          if (this.totalClaimed<0) this.totalClaimed =0;
           this.calcMaxCanBuy();
         }else{
           this.progressbarvalue[i] = ((this.world.products.product[i].vitesse
@@ -266,6 +284,7 @@ export class AppComponent {
             break;
           }
         }
+        this.service.putUpgrade(upgrade)
         this.snackBar.open("Génial ! Vous venez d'acheter un Cash Upgrade", "", {duration:6000});
       }
     } else{
@@ -294,10 +313,12 @@ export class AppComponent {
             break;
           }
         }
+        this.service.putUpgrade(upgrade)
         this.snackBar.open("Génial ! Vous venez d'acheter un Angel Upgrade", "", {duration:6000});
       }
     }
   }
+  
 
   buyManager(manager :any){
     if(this.world.money>=manager.seuil){
@@ -305,9 +326,18 @@ export class AppComponent {
       this.world.money = this.world.money - manager.seuil;
       manager.unlocked = true;
       this.world.products.product[manager.idcible-1].managerUnlocked = true;
-      setInterval(() => { this.startFabrication(manager.idcible-1); },100);
       this.snackBar.open("Félicitations ! Vous venez d'embaucher un manager pour "+this.world.products.product[manager.idcible-1].name, "", {duration:6000})
+      this.loopManager(manager)
     }
+  }
+
+  loopManager(manager:any){
+    setInterval(() => { 
+      if(this.timeleft[manager.idcible-1]<=0){
+        this.timeleft[manager.idcible-1] = this.world.products.product[manager.idcible-1].vitesse;
+        this.lastupdate[manager.idcible-1] = Date.now();
+      }  
+    },100);
   }
 
   changeUsername(){
@@ -316,6 +346,14 @@ export class AppComponent {
       this.service.setUser(this.username); 
     }else {
       this.username = localStorage.getItem("username");
+    }
+  }
+
+  deleteWorld(){
+    if(this.totalClaimed >0){
+      this.service.delete().then( 
+        world => { this.world = world; }
+      ); 
     }
   }
 
