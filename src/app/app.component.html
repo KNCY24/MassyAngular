@@ -284,7 +284,7 @@
               <div *ngIf="Productprice[n]==0" [innerHTML]=" world.products.product[n].cout | bigvalue"></div>
               <div *ngIf="Productprice[n]!=0" [innerHTML]=" Productprice[n] | bigvalue"></div>
             </button>
-            <button class="time" >{{world.products.product[n].vitesse}}</button>
+            <button class="time"  [innerHTML]="world.products.product[n].vitesse | time"></button>
         </div>
       </div>
     </div>

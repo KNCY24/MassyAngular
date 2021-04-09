@@ -14,12 +14,14 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 import { HttpClientModule } from '@angular/common/http';
 import { BigvaluePipe } from './bigvalue.pipe';
+import { TimePipe } from './time.pipe';
 
 @NgModule({
   declarations: [
     AppComponent,
     ProductComponent,
-    BigvaluePipe
+    BigvaluePipe,
+    TimePipe
   ],
   imports: [
     BrowserModule,
