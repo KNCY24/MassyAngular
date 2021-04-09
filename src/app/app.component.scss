@@ -354,6 +354,61 @@ button:focus {
                 font-size:30px;
                 line-height: 50px;
             }
+            &.modal-body-investors{
+                div{
+                    span:last-child{
+                        display: block;
+                        margin-top: 15px;
+                        color:#FF7F00;
+                        background: white;
+                        border-radius: 50%;
+                        height: 25px;
+                        line-height: 28px;
+                    }
+                    span {
+                        font-weight: 600;
+                    }
+                    span:first-child{
+                        font-size: 28px;
+                    }
+                }
+                text-align: center;
+                #description {
+                    text-align: center;
+                    font-family: 'Open Sans Condensed', sans-serif;
+                    font-size:25px;
+                    margin-bottom: 12%;
+                }
+                #totalA{
+                    font-size:25px;
+                    text-align: center;
+                    margin-bottom: 9%;
+                }
+                #bonus{
+                    font-size:25px;
+                    text-align: center;
+                    display: inline-block;
+                    margin:4.5%;
+                }
+                #nextA{
+                    font-size:25px;
+                    text-align: center;
+                    display: inline-block;
+                    margin:4.5%
+                }
+                #reset{
+                    font-size: 20px;
+                    margin-top: 5%;
+                    float: right;
+                    background: #FCA311;
+                    padding: 15px;
+                    border-radius: 25px;
+                    &:hover{
+                        color:white;
+                        cursor: pointer;
+                    }
+                }
+            }
             &.modal-body-upgrades{
                 top:80px;
             }
