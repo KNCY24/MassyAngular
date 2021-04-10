@@ -344,8 +344,7 @@
         <input placeholder="Nom utilisateur" type="text" [(ngModel)]="username" value="{{username}}" (change)="changeUsername()" />
       </div>
       <div class="modal-info">
-        <br>Argent cumulé : $ {{world.score}} <br>
-        Dernière mise à jour : {{world.lastupdate}}
+        <br>Argent cumulé : $ {{world.score}}
       </div>
     </div>
 </div>
@@ -450,7 +449,10 @@
               </div>
               <div class="modal-product-info">
                 <span>{{upgrade.name}}</span><br>
-                <span *ngIf="upgrade.idcible>0">{{world.products.product[upgrade.idcible-1].name}}</span>
+                <span *ngIf="upgrade.idcible>0">
+                  <span *ngIf=""></span>
+                  {{world.products.product[upgrade.idcible-1].name}}
+                </span>
                 <span *ngIf="upgrade.idcible==0">All</span>
                 {{upgrade.typeratio}} x{{upgrade.ratio}} 
                 <br>Price : ${{upgrade.seuil}}
@@ -469,7 +471,7 @@
               </div>
               <div class="modal-product-info">
                 <span>{{upgrade.name}}</span><br>
-                <span *ngIf="upgrade.idcible!=0">{{world.products.product[upgrade.idcible-1].name}}</span>
+                <span *ngIf="upgrade.idcible>=0">{{world.products.product[upgrade.idcible-1].name}}</span>
                 <span *ngIf="upgrade.idcible==0">All</span>
                 {{upgrade.typeratio}} x{{upgrade.ratio}} 
                 <br>Price : {{upgrade.seuil}} angels
@@ -521,7 +523,7 @@
       <div class="modal-body modal-body-investors">
         <div id="description">"La peur du risque d'investir fera que tu ne seras jamais riche". <br> Alors qu'es-tu prêt à sacrifier pour atteindre ton objectif ultime ?! </div>
         <div id="totalA"> <span>Total Angels</span> <br><span>{{world.activeangels}}</span></div>
-        <div id="bonus"><span>Bonus per Angel</span><br><span>{{world.angelbonus}}%</span></div>
+        <div id="bonus"><span>Total Bonus</span><br><span>{{world.angelbonus}}%</span></div>
         <div id="nextA"><span>Claimed with restart</span><br><span>{{totalClaimed}}</span></div>
         <div id="reset" (click)="deleteWorld()">Claim Angel Investors</div>
       </div>

@@ -180,12 +180,12 @@ export class AppComponent {
           price = this.world.products.product[i].cout*multiplicateur;
           if(price <= this.world.money) {
             this.qtmulti[i] = n+1;
-            this.Productprice[i]=price;
           }else{
             max=true;
           }
           n=n+1;
         }
+        this.Productprice[i]=price;
         multiplicateur=0;
       }
     } else {
@@ -352,7 +352,10 @@ export class AppComponent {
   deleteWorld(){
     if(this.totalClaimed >0){
       this.service.delete().then( 
-        world => { this.world = world; }
+        world => { 
+          this.world = world; 
+          document.location.reload();
+        }
       ); 
     }
   }
