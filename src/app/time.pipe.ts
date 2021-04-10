@@ -22,6 +22,7 @@ export class TimePipe implements PipeTransform {
         nbsec= Math.floor(temps/1000);
         nbmin=Math.floor(nbsec/60);
         nbheure=Math.floor(nbsec/3660);
+        nbmin=nbmin%60;
         nbsec=nbsec%60}
       else{
         nbdix=nbdix;
@@ -29,6 +30,7 @@ export class TimePipe implements PipeTransform {
         nbsec= Math.floor(temps/1000);
         nbmin=Math.floor(nbsec/60);
         nbheure=Math.floor(nbsec/3660);
+        nbmin=nbmin%60;
         nbsec=nbsec%60
       }
       
