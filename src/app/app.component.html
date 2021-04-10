@@ -344,7 +344,7 @@
         <input placeholder="Nom utilisateur" type="text" [(ngModel)]="username" value="{{username}}" (change)="changeUsername()" />
       </div>
       <div class="modal-info">
-        <br>Argent cumulé : $ {{world.score}} <br>
+        <br>Argent cumulé : <span [innerHTML]=" world.score | bigvalue"></span><br>
         Dernière mise à jour : {{world.lastupdate}}
       </div>
     </div>
