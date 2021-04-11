@@ -252,7 +252,7 @@
   <span>{{world.name}}</span>
   <div class="spacer"></div>
   <span class="capital">$</span> 
-  <span [innerHTML]= "world.money | bigvalue " class="capital"></span>
+  <span [innerHTML]= "world.money | money " class="capital"></span>
   <div class="spacer"></div>
   <span class="quantity" (click)="changeCommut()"><span class="reduce">Buy</span> <br> {{xcommut}}</span>
 </div>
@@ -262,10 +262,10 @@
     <div>
       <ul class="menuleft">
         <li class="user" (click)="profil=true"><img [attr.src]="server+world.logo" [attr.width]="130" alt="Massy Logo"/></li>
-        <li><button (click)="showUnlocks=true" matBadge="badgeUnlocks" matBadgeHidden="badgeUnlocks==0">Unlocks</button></li>
-        <li><button (click)="showUpgrades=true" matBadge="badgeUpgrades" matBadgeHidden="badgeUpgrades==0">Upgrades</button></li>
-        <li><button (click)="showManagers=true" matBadge="badgeManagers" matBadgeHidden="badgeManagers==0">Managers</button></li>
-        <li><button (click)="showInvestors=true" matBadge="badgeInvestors" matBadgeHidden="badgeInvestors==0">Investors</button></li>
+        <li><button (click)="showUnlocks=true">Unlocks</button></li>
+        <li><button (click)="showUpgrades=true" [matBadge]="badgeUpgrades" [matBadgeHidden]="badgeUpgrades==0">Upgrades</button></li>
+        <li><button (click)="showManagers=true" [matBadge]="badgeManagers" [matBadgeHidden]="badgeManagers==0">Managers</button></li>
+        <li><button (click)="showInvestors=true">Investors</button></li>
       </ul>
     </div>
     
@@ -284,7 +284,7 @@
               <div *ngIf="Productprice[n]==0" [innerHTML]=" world.products.product[n].cout | bigvalue"></div>
               <div *ngIf="Productprice[n]!=0" [innerHTML]=" Productprice[n] | bigvalue"></div>
             </button>
-            <button class="time"  [innerHTML]="world.products.product[n].vitesse | time"></button>
+            <button class="time"  [innerHTML]="world.products.product[n].timeleft | time"></button>
         </div>
       </div>
     </div>
@@ -380,6 +380,7 @@
             </div>
           </div>
         </div>
+        <div class="msg-empty" *ngIf="countUnlocks == 0"> Vous n'avez débloqué aucun bonus d'un produit pour le moment ... Continuez vos efforts !</div>
       </div>
       <div *ngIf="showgU" class="modal-body-content">
         <div *ngFor="let unlock of world.allunlocks.pallier">
@@ -395,6 +396,7 @@
             </div>
           </div>
         </div>
+        <div class="msg-empty" *ngIf="countallUnlocks == 0"> Vous n'avez débloqué aucun bonus général pour le moment ... Continuez vos efforts !</div>
       </div>
       <div *ngIf="showrU" class="modal-body-content">
         <div *ngFor="let product of world.products.product">
@@ -451,7 +453,6 @@
               <div class="modal-product-info">
                 <span>{{upgrade.name}}</span><br>
                 <span *ngIf="upgrade.idcible>0">
-                  <span *ngIf=""></span>
                   {{world.products.product[upgrade.idcible-1].name}}
                 </span>
                 <span *ngIf="upgrade.idcible==0">All</span>

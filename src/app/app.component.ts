@@ -16,7 +16,6 @@ export class AppComponent {
   usertype : string[] = ["Decontesse", "MissDonut","4fromages","Pernaut","Ok","Spielberg"];
 
   progressbarvalue : number[] = [0,0,0,0,0,0];
-  timeleft : number[] = [0,0,0,0,0,0];
   lastupdate : number[]= [0,0,0,0,0,0];
   commutateur : number = 1; //1, 10, 100, 0(max)
   xcommut : string = "x1";
@@ -37,10 +36,10 @@ export class AppComponent {
   showManagers :boolean = false;
   showInvestors :boolean = false;
 
-  badgeUnlocks:number=2;
   badgeUpgrades:number=0;
-  badgeManagers:number=2;
-  badgeInvestors:number=0;
+  badgeManagers:number=0;
+  countUnlocks:number=0;
+  countallUnlocks:number=0;
 
 
   constructor(private service: RestserviceService, private snackBar: MatSnackBar) { 
@@ -58,8 +57,8 @@ export class AppComponent {
   }
 
   startFabrication(p : number){
-    if(this.timeleft[p]<=0){
-      this.timeleft[p] = this.world.products.product[p].vitesse;
+    if(this.world.products.product[p].timeleft<=0){
+      this.world.products.product[p].timeleft = this.world.products.product[p].vitesse;
       this.service.putProduct(this.world.products.product[p]);
       this.lastupdate[p] = Date.now();
     }    
@@ -87,7 +86,10 @@ export class AppComponent {
   init() {
     let player=<HTMLVideoElement> document.getElementById('audioPlayer');
     player.play();
-    this.totalClaimed = 150* Math.sqrt(this.world.score/Math.pow(10,15)) - this.world.totalangels;
+    this.upgradesBuyable();
+    this.managersBuyable();
+    this.unlocksUnlocked();
+    this.totalClaimed = Math.trunc(150* Math.sqrt(this.world.score/Math.pow(10,15)) - this.world.totalangels);
     if (this.totalClaimed<0) this.totalClaimed =0;
     for(let p in this.world.products.product){
       this.Productprice[p] = this.world.products.product[p].cout;
@@ -96,7 +98,6 @@ export class AppComponent {
           - this.world.products.product[p].timeleft) / this.world.products.product[p].vitesse) * 100;
 
         this.lastupdate[p] = parseInt(this.world.lastupdate);
-        this.timeleft[p] = this.world.products.product[p].timeleft;
       }
     }
     for(let m in this.world.managers.pallier){
@@ -119,26 +120,69 @@ export class AppComponent {
   }
 
   calcScore() {
+    this.upgradesBuyable();
+    this.managersBuyable();
+    this.unlocksUnlocked();
     for(let i in this.world.products.product){
-      if(this.timeleft[i] != 0){
+      if(this.world.products.product[i].timeleft != 0){
         const tempsEcoule = Date.now() - this.lastupdate[i];
         this.lastupdate[i] = Date.now();
-        this.timeleft[i] = this.timeleft[i] - tempsEcoule;
-        if(this.timeleft[i] <= 0){
-          this.timeleft[i] = 0;
+        this.world.products.product[i].timeleft = this.world.products.product[i].timeleft - tempsEcoule;
+        if(this.world.products.product[i].timeleft <= 0){
+          this.world.products.product[i].timeleft = 0;
           this.progressbarvalue[i]=0;
           this.world.score = this.world.score + (this.world.products.product[i].revenu * (1+(this.world.activeangels*this.world.angelbonus/100) ));
           this.world.money = this.world.money + (this.world.products.product[i].revenu * (1+(this.world.activeangels*this.world.angelbonus/100) ));
-          this.totalClaimed = 150* Math.sqrt(this.world.score/Math.pow(10,5)) - this.world.totalangels;
+          this.totalClaimed = Math.trunc(150* Math.sqrt(this.world.score/Math.pow(10,5)) - this.world.totalangels);
           if (this.totalClaimed<0) this.totalClaimed =0;
           this.calcMaxCanBuy();
         }else{
           this.progressbarvalue[i] = ((this.world.products.product[i].vitesse
-            - this.timeleft[i]) / this.world.products.product[i].vitesse) * 100;
+            - this.world.products.product[i].timeleft) / this.world.products.product[i].vitesse) * 100;
         }
       }
     }
   }
+
+  upgradesBuyable(){
+    this.badgeUpgrades = 0;
+    for(let i in this.world.upgrades.pallier){
+      if (this.world.upgrades.pallier[i].seuil <= this.world.money && this.world.upgrades.pallier[i].unlocked==false){
+        this.badgeUpgrades = this.badgeUpgrades + 1;
+      }
+    }
+    for(let i in this.world.angelupgrades.pallier){
+      if (this.world.angelupgrades.pallier[i].seuil <= this.world.activeangels && this.world.angelupgrades.pallier[i].unlocked==false){
+        this.badgeUpgrades = this.badgeUpgrades + 1;
+      }
+    }
+  }
+
+  managersBuyable(){
+    this.badgeManagers = 0;
+    for(let i in this.world.managers.pallier){
+      if (this.world.managers.pallier[i].seuil <= this.world.money && this.world.managers.pallier[i].unlocked==false){
+        this.badgeManagers = this.badgeManagers + 1;
+      }
+    }
+  }
+
+  unlocksUnlocked(){
+      this.countUnlocks = 0;
+      for(let i in this.world.products.product){
+        for(let p in this.world.products.product[i].palliers.pallier){
+            if(this.world.products.product[i].palliers.pallier[p].unlocked == true ){
+              this.countUnlocks = this.countUnlocks + 1;
+            }
+        }
+      }
+      for (let i in this.world.allunlocks.pallier){
+        if (this.world.allunlocks.pallier[i].unlocked == true){
+          this.countallUnlocks = this.countallUnlocks + 1;
+        }
+      }
+  }
+
 
   changeCommut(){
     switch(this.commutateur){
@@ -174,18 +218,19 @@ export class AppComponent {
         this.qtmulti[i]=1;
         let multiplicateur = 0;
         let price = 0;
+        this.Productprice[i]=this.world.products.product[i].cout*Math.pow(this.world.products.product[i].croissance,n);
         while(max === false){
           multiplicateur = multiplicateur + (Math.pow(this.world.products.product[i].croissance,n));
           
           price = this.world.products.product[i].cout*multiplicateur;
           if(price <= this.world.money) {
             this.qtmulti[i] = n+1;
+            this.Productprice[i]=price;
           }else{
             max=true;
           }
           n=n+1;
         }
-        this.Productprice[i]=price;
         multiplicateur=0;
       }
     } else {
@@ -231,29 +276,34 @@ export class AppComponent {
   unlocks(produit:any,pallier:any){
     if(produit==null){
       switch(pallier.typeratio){
-        case "vitesse":{
-          for(let p in this.world.products.product) this.world.products.product[p].vitesse = this.world.products.product[p].vitesse/pallier.ratio; 
+        case "vitesse":
+          for(let p in this.world.products.product){
+            this.world.products.product[p].vitesse = this.world.products.product[p].vitesse/pallier.ratio; 
+            if(this.world.products.product[p].timeleft > 0) {
+              this.world.products.product[p].timeleft = this.world.products.product[p].timeleft/pallier.ratio;
+            }
+          }
           break;
-        }
-        case "gain": {
+        case "gain": 
           for(let p in this.world.products.product) this.world.products.product[p].revenu = this.world.products.product[p].revenu*pallier.ratio;
           break;
-        }
       }
     }else {
       switch(pallier.typeratio){
-        case "vitesse":{
-          produit.vitesse = produit.vitesse/pallier.ratio; 
+        case "vitesse":
+          produit.vitesse = produit.vitesse/pallier.ratio;
+          if(produit.timeleft > 0){
+            produit.timeleft = produit.timeleft/pallier.ratio;
+          } 
           break;
-        }
-        case "gain": {
+        case "gain":
           produit.revenu = produit.revenu*pallier.ratio;
           break;
-        }
       }
     }
     if(pallier.typeratio == "ange"){
-      this.world.angelbonus = this.world.angelbonus + pallier.ratio;
+      this.world.activeangels = this.world.activeangels + pallier.ratio;
+      this.world.angelbonus = this.world.angelbonus + (pallier.ratio * 2);
     }
   }
   
@@ -263,26 +313,28 @@ export class AppComponent {
         this.world.money = this.world.money-upgrade.seuil;
         upgrade.unlocked = true;
         switch(upgrade.typeratio){
-          case "vitesse":{
+          case "vitesse":
             if(upgrade.idcible ==0){
-              for(let i in this.world.products.product) this.world.products.product[i].vitesse = this.world.products.product[i].vitesse/upgrade.ratio; 
+              for(let i in this.world.products.product) {
+                this.world.products.product[i].vitesse = this.world.products.product[i].vitesse/upgrade.ratio; 
+                this.world.products.product[i].timeleft = this.world.products.product[i].timeleft/upgrade.ratio;
+              }
             } else {
               this.world.products.product[upgrade.idcible-1].vitesse = this.world.products.product[upgrade.idcible-1].vitesse/upgrade.ratio; 
+              this.world.products.product[upgrade.idcible-1].timeleft = this.world.products.product[upgrade.idcible-1].timeleft/upgrade.ratio;
             }
             break;
-          }
-          case "gain": {
+          case "gain":
             if(upgrade.idcible ==0){
               for(let i in this.world.products.product) this.world.products.product[i].revenu = this.world.products.product[i].revenu*upgrade.ratio;
             } else {
               this.world.products.product[upgrade.idcible-1].revenu = this.world.products.product[upgrade.idcible-1].revenu*upgrade.ratio;
             }
             break;
-          }
-          case "ange": {
-            this.world.angelbonus = this.world.angelbonus + upgrade.ratio;
+          case "ange":
+            this.world.activeangels = this.world.activeangels + upgrade.ratio;
+            this.world.angelbonus = this.world.angelbonus + (upgrade.ratio * 2);
             break;
-          }
         }
         this.service.putUpgrade(upgrade)
         this.snackBar.open("Génial ! Vous venez d'acheter un Cash Upgrade", "", {duration:6000});
@@ -292,26 +344,28 @@ export class AppComponent {
         this.world.activeangels = this.world.activeangels-upgrade.seuil;
         upgrade.unlocked = true;
         switch(upgrade.typeratio){
-          case "vitesse":{
+          case "vitesse":
             if(upgrade.idcible ==0){
-              for(let i in this.world.products.product) this.world.products.product[i].vitesse = this.world.products.product[i].vitesse/upgrade.ratio; 
+              for(let i in this.world.products.product) {
+                this.world.products.product[i].vitesse = this.world.products.product[i].vitesse/upgrade.ratio;
+                this.world.products.product[i].timeleft = this.world.products.product[i].timeleft/upgrade.ratio;
+              }
             } else {
               this.world.products.product[upgrade.idcible-1].vitesse = this.world.products.product[upgrade.idcible-1].vitesse/upgrade.ratio; 
+              this.world.products.product[upgrade.idcible-1].timeleft = this.world.products.product[upgrade.idcible-1].timeleft/upgrade.ratio; 
             }
             break;
-          }
-          case "gain": {
+          case "gain":
             if(upgrade.idcible ==0){
               for(let i in this.world.products.product) this.world.products.product[i].revenu = this.world.products.product[i].revenu*upgrade.ratio;
             } else {
               this.world.products.product[upgrade.idcible-1].revenu = this.world.products.product[upgrade.idcible-1].revenu*upgrade.ratio;
             }
             break;
-          }
-          case "ange": {
-            this.world.angelbonus = this.world.angelbonus + upgrade.ratio;
+          case "ange":
+            this.world.activeangels = this.world.activeangels + upgrade.ratio;
+            this.world.angelbonus = this.world.activeangels * 2;
             break;
-          }
         }
         this.service.putUpgrade(upgrade)
         this.snackBar.open("Génial ! Vous venez d'acheter un Angel Upgrade", "", {duration:6000});
@@ -333,8 +387,8 @@ export class AppComponent {
 
   loopManager(manager:any){
     setInterval(() => { 
-      if(this.timeleft[manager.idcible-1]<=0){
-        this.timeleft[manager.idcible-1] = this.world.products.product[manager.idcible-1].vitesse;
+      if(this.world.products.product[manager.idcible-1].timeleft<=0){
+        this.world.products.product[manager.idcible-1].timeleft = this.world.products.product[manager.idcible-1].vitesse;
         this.lastupdate[manager.idcible-1] = Date.now();
       }  
     },100);

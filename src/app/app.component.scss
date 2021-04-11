@@ -187,7 +187,7 @@ button:focus {
                 }
             }
             .productbuy {
-                height:50px;
+                height:56px;
                 padding:0 !important;
                 grid-area: area3;
         
@@ -416,6 +416,11 @@ button:focus {
                 height: 100%;
                 overflow-y:scroll;
                 overflow-x: hidden;
+                .msg-empty {
+                    font-size:30px;
+                    margin-top:5%;
+                    line-height: 1;
+                }
             }
             .body-content {
                 padding-top:30px;

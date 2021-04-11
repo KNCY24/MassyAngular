@@ -11,17 +11,20 @@ import {MatProgressBarModule} from '@angular/material/progress-bar';
 
 import {FormsModule} from '@angular/forms';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {MatBadgeModule} from '@angular/material/badge';
 
 import { HttpClientModule } from '@angular/common/http';
 import { BigvaluePipe } from './bigvalue.pipe';
 import { TimePipe } from './time.pipe';
+import { MoneyPipe } from './money.pipe';
 
 @NgModule({
   declarations: [
     AppComponent,
     ProductComponent,
     BigvaluePipe,
-    TimePipe
+    TimePipe,
+    MoneyPipe
   ],
   imports: [
     BrowserModule,
@@ -32,6 +35,7 @@ import { TimePipe } from './time.pipe';
     MatProgressBarModule,
     MatIconModule,
     MatSnackBarModule,
+    MatBadgeModule,
     FormsModule
   ],
   providers: [],
