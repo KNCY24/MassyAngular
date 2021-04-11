@@ -332,8 +332,7 @@ export class AppComponent {
             }
             break;
           case "ange":
-            this.world.activeangels = this.world.activeangels + upgrade.ratio;
-            this.world.angelbonus = this.world.angelbonus + (upgrade.ratio * 2);
+            this.world.angelbonus = this.world.angelbonus + upgrade.ratio ;
             break;
         }
         this.service.putUpgrade(upgrade)
@@ -363,8 +362,7 @@ export class AppComponent {
             }
             break;
           case "ange":
-            this.world.activeangels = this.world.activeangels + upgrade.ratio;
-            this.world.angelbonus = this.world.activeangels * 2;
+            this.world.angelbonus = this.world.angelbonus + upgrade.ratio;
             break;
         }
         this.service.putUpgrade(upgrade)
